@@ -2,9 +2,9 @@ import pygame as pp
 
 
 class Player(pp.sprite.Sprite):
-    def __init__(self, screen):
+    def __init__(self, screen, x, y):
         pp.sprite.Sprite.__init__(self)
-        self.rect = pp.Rect(0, 0, 40, 40)
+        self.rect = pp.Rect(x, y, 40, 40)
         self.x = 0
         self.y = 0
         self.screen = screen
