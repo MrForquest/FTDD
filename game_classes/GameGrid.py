@@ -9,7 +9,11 @@ class GCell(pygame.sprite.Sprite):
         self.type_id = type_id
         self.concerning = concerning
         # self.rect.size = self.size
-        self.rect = pygame.Rect(coord, (self.size, self.size))
+        self.image = pygame.Surface((self.size, self.size),
+                                    pygame.SRCALPHA, 32)
+        pygame.draw.rect(self.image, pygame.Color("green"), (0, 0, self.size, self.size))
+
+        self.rect = pygame.Rect(*coord, self.size, self.size)
         self.rect.x = coord[0]
         self.rect.y = coord[1]
         self.x = coord[0]
@@ -27,19 +31,10 @@ class Grid:
         if grid is None:
             self.grid = pygame.sprite.Group()
             for i in range(self.width * self.height):
-                self.grid.add(GCell((i % self.width, i % self.height), False))
+                self.grid.add(GCell((i % self.width, i % self.height), True))
         else:
             self.grid = grid
 
-    def shift(self, coord_center):
-        dx = self.coord[0] - coord_center[0]
-        dy = self.coord[1] - coord_center[1]
-        for cell in self.grid.sprites():
-            cell.rect.x = cell.x + dx
-            cell.rect.y = cell.y + dy
-
     def draw(self, sc, coord_center):
-        self.shift(coord_center)
-        for cell in self.grid.sprites():
-            pygame.draw.rect(sc, (0, 255, 0), cell.rect)
+        self.grid.draw(sc)
         # self.grid.draw(sc)
