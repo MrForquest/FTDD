@@ -5,16 +5,15 @@ import math
 class Player(pp.sprite.Sprite):
     size = 40
 
-    def __init__(self, screen, coord, group_collide):
+    def __init__(self, coord, group_collide):
         pp.sprite.Sprite.__init__(self)
         self.image = pp.Surface((self.size, self.size),
                                 pp.SRCALPHA, 32)
         pp.draw.rect(self.image, pp.Color("blue"), (0, 0, self.size, self.size))
 
         self.rect = pp.Rect(*coord, self.size, self.size)
-        self.x = 90
-        self.y = 150
-        self.screen = screen
+        self.x = coord[0]
+        self.y = coord[1]
         self.hp = 100
         self.group_collide = group_collide
         self.inventory = {'weapons': [],
