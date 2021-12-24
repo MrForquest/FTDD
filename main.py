@@ -9,7 +9,6 @@ if __name__ == '__main__':
     size = width, height = 800, 400
     screen = pygame.display.set_mode(size)
     group = pygame.sprite.Group()
-    all_sprites = pygame.sprite.Group(*group.sprites())
     group.add(GCell((0, 0), True))
     group.add(GCell((0, 100), True))
     group.add(GCell((0, 160), True))
@@ -18,8 +17,11 @@ if __name__ == '__main__':
     group.add(GCell((140, 140), True))
     group.add(GCell((280, 140), True))
     group.add(GCell((360, 140), True))
+    all_sprites = pygame.sprite.Group(*group.sprites())
     player = Player(screen, (400, 200), all_sprites)
-    all_sprites.add(Thing((150, 150), player))
+    first_thing = Thing((300, 300), player, 'the sword of asshole', screen)
+    group.add(first_thing)
+    all_sprites.add(first_thing)
     print(len(all_sprites))
     grid = Grid(20, 20, (0, 0), grid=group)
     all_sprites.add(player)
@@ -35,10 +37,11 @@ if __name__ == '__main__':
                 running = False
         screen.fill((0, 0, 0))
 
-        all_sprites.update()
 
         player_coord = player.get_cords()
         camera.draw(screen, player_coord, all_sprites)
+
+        all_sprites.update()
 
         clock.tick(fps)
         pygame.display.flip()
