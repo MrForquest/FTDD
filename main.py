@@ -1,6 +1,7 @@
 import pygame
 from game_classes.GameGrid import Grid, GCell
 from game_classes.Player import Player, Camera
+from game_classes.Game_things import Thing
 
 if __name__ == '__main__':
     pygame.init()
@@ -8,6 +9,7 @@ if __name__ == '__main__':
     size = width, height = 800, 400
     screen = pygame.display.set_mode(size)
     group = pygame.sprite.Group()
+    all_sprites = pygame.sprite.Group(*group.sprites())
     group.add(GCell((0, 0), True))
     group.add(GCell((0, 100), True))
     group.add(GCell((0, 160), True))
@@ -16,10 +18,10 @@ if __name__ == '__main__':
     group.add(GCell((140, 140), True))
     group.add(GCell((280, 140), True))
     group.add(GCell((360, 140), True))
-    all_sprites = pygame.sprite.Group(*group.sprites())
+    player = Player(screen, (400, 200), all_sprites)
+    all_sprites.add(Thing((150, 150), player))
     print(len(all_sprites))
     grid = Grid(20, 20, (0, 0), grid=group)
-    player = Player(screen, (400, 200), all_sprites)
     all_sprites.add(player)
     camera = Camera()
 

@@ -17,6 +17,8 @@ class Player(pp.sprite.Sprite):
         self.screen = screen
         self.hp = 100
         self.group_collide = group_collide
+        self.inventory = {'weapons': [],
+                          'magicshit': []}
 
     def update(self):
         # pp.draw.rect(self.screen, (0, 0, 255), self.rect)
