@@ -1,4 +1,5 @@
 import pygame
+
 pygame.init()
 
 
@@ -18,8 +19,7 @@ class Thing(pygame.sprite.Sprite):
         return [self.x, self.y]
 
     def update(self):
-        key = pygame.key.get_pressed()
-        if pygame.sprite.collide_mask(self, self.player):
+        if pygame.sprite.collide_rect(self, self.player):
             font = pygame.font.Font(None, 22)
             txt = font.render(self.name, False, (255, 255, 255))
             self.screen.blit(txt, (self.rect.x - len(self.name * 3), self.rect.y - 15))

@@ -2,6 +2,7 @@ import pygame
 from game_classes.GameGrid import Grid, GCell
 from game_classes.Player import Player, Camera
 from game_classes.Projectile import Projectile
+from game_classes.Game_things import Thing
 
 if __name__ == '__main__':
     pygame.init()
@@ -22,8 +23,12 @@ if __name__ == '__main__':
     grid = Grid(20, 20, (0, 0), grid=group)
     player = Player((90, 90), all_sprites)
     proj = Projectile((80, -40), 30, 2, 20, True, all_sprites)
-    all_sprites.add(player)
+
     all_sprites.add(proj)
+    first_thing = Thing((300, 300), player, 'the sword of asshole', screen)
+    group.add(first_thing)
+    all_sprites.add(first_thing)
+    all_sprites.add(player)
     camera = Camera()
 
     running = True
