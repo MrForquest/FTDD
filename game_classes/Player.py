@@ -17,20 +17,33 @@ class Player(pp.sprite.Sprite):
         self.hp = 100
         self.group_collide = group_collide
         self.inventory = {'weapons': [],
-                          'magicshit': []}
+                          'magicshit': [],
+                          'just things': []}
 
     def update(self):
         # pp.draw.rect(self.screen, (0, 0, 255), self.rect)
         dx = 0
         dy = 0
         key = pp.key.get_pressed()
-        if key[pp.K_a] and self.rect.x > 0:
+        if key[pp.K_a] and key[pp.K_w]:
             dx = -2
-        if key[pp.K_d] and self.rect.x < 500:
-            dx = 2
-        if key[pp.K_w] and self.rect.y > 0:
             dy = -2
-        if key[pp.K_s] and self.rect.y < 500:
+        elif key[pp.K_d] and key[pp.K_w]:
+            dx = +2
+            dy = -2
+        elif key[pp.K_a] and key[pp.K_s]:
+            dx = -2
+            dy = +2
+        elif key[pp.K_d] and key[pp.K_s]:
+            dx = +2
+            dy = +2
+        elif key[pp.K_a] and self.rect.x > 0:
+            dx = -2
+        elif key[pp.K_d] and self.rect.x < 500:
+            dx = 2
+        elif key[pp.K_w] and self.rect.y > 0:
+            dy = -2
+        elif key[pp.K_s] and self.rect.y < 500:
             dy = 2
         self.x += dx
         self.y += dy

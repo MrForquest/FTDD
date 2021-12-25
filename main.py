@@ -2,25 +2,26 @@ import pygame
 from game_classes.GameGrid import Grid, GCell
 from game_classes.Player import Player, Camera
 from game_classes.Projectile import Projectile
+from game_classes.Game_things import Thing, Weapon
 
 if __name__ == '__main__':
     pygame.init()
     pygame.display.set_caption('Движущийся квадрат')
-    size = width, height = 800, 400
+    size = width, height = 800, 700
     screen = pygame.display.set_mode(size)
     group = pygame.sprite.Group()
-    group.add(GCell((0, 0), True))
-    group.add(GCell((0, 100), True))
-    group.add(GCell((0, 160), True))
-    group.add(GCell((100, 0), True))
-    group.add(GCell((160, 0), True))
-    group.add(GCell((140, 140), True))
-    group.add(GCell((280, 140), True))
-    group.add(GCell((360, 140), True))
+    things = pygame.sprite.Group()
+    for i in range(15):
+        group.add(GCell((i * 40, 0), True))
+        group.add(GCell((i * 40, 600), True))
     all_sprites = pygame.sprite.Group(*group.sprites())
     print(len(all_sprites))
     grid = Grid(20, 20, (0, 0), grid=group)
-    player = Player((90, 90), all_sprites)
+    player = Player((300, 300), all_sprites)
+    thing = Thing((200, 400), player, 'Обычный класс вещи', screen)
+    weapon = Weapon((300, 400), player, 'Оружие', screen, 20)
+    all_sprites.add(thing, weapon)
+    group.add(thing, weapon)
     proj = Projectile((80, -40), 30, 2, 20, True, all_sprites)
     all_sprites.add(player)
     all_sprites.add(proj)
@@ -34,12 +35,15 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1 and player.inventory['weapons'] != []:
+                    player.inventory['weapons'][0].shoot(event.pos, all_sprites)
         screen.fill((0, 0, 0))
-
-        all_sprites.update()
 
         player_coord = player.get_cords()
         camera.draw(screen, player_coord, all_sprites)
+
+        all_sprites.update()
 
         clock.tick(fps)
         pygame.display.flip()

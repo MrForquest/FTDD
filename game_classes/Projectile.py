@@ -10,13 +10,12 @@ class Projectile(pp.sprite.Sprite):
         self.image = pp.Surface((self.size, self.size),
                                 pp.SRCALPHA, 32)
         pp.draw.rect(self.image, pp.Color("red"), (0, 0, self.size, self.size))
-
         self.rect = pp.Rect(*coord, self.size, self.size)
         self.x = coord[0]
         self.y = coord[1]
         self.course = -course
         self.velocity = velocity
-        angle = (self.course / 180) * math.pi
+        angle = self.course
         self.vx = math.cos(angle) * self.velocity
         self.vy = math.sin(angle) * self.velocity
         self.player = player
