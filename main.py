@@ -15,7 +15,7 @@ if __name__ == '__main__':
         group.add(GCell((i * 40, 0), True))
         group.add(GCell((i * 40, 600), True))
     all_sprites = pygame.sprite.Group(*group.sprites())
-    print(len(all_sprites))
+
     grid = Grid(20, 20, (0, 0), grid=group)
     player = Player((300, 300), all_sprites)
     thing = Thing((200, 400), player, 'Обычный класс вещи', screen)

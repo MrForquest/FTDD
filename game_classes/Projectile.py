@@ -3,7 +3,6 @@ import math
 
 
 class Projectile(pp.sprite.Sprite):
-
     def __init__(self, coord, course, velocity, size, player, group_collide):
         pp.sprite.Sprite.__init__(self)
         self.size = size

@@ -21,30 +21,22 @@ class Player(pp.sprite.Sprite):
                           'just things': []}
 
     def update(self):
-        # pp.draw.rect(self.screen, (0, 0, 255), self.rect)
         dx = 0
         dy = 0
+        vel = 2
         key = pp.key.get_pressed()
-        if key[pp.K_a] and key[pp.K_w]:
-            dx = -2
-            dy = -2
-        elif key[pp.K_d] and key[pp.K_w]:
-            dx = +2
-            dy = -2
-        elif key[pp.K_a] and key[pp.K_s]:
-            dx = -2
-            dy = +2
-        elif key[pp.K_d] and key[pp.K_s]:
-            dx = +2
-            dy = +2
-        elif key[pp.K_a] and self.rect.x > 0:
-            dx = -2
-        elif key[pp.K_d] and self.rect.x < 500:
-            dx = 2
-        elif key[pp.K_w] and self.rect.y > 0:
-            dy = -2
-        elif key[pp.K_s] and self.rect.y < 500:
-            dy = 2
+        if key[pp.K_a] and self.rect.x > 0:
+            dx = -vel
+        if key[pp.K_d] and self.rect.x < 500:
+            dx = vel
+        if key[pp.K_w] and self.rect.y > 0:
+            dy = -vel
+        if key[pp.K_s] and self.rect.y < 500:
+            dy = vel
+        if dx != 0 and dy != 0:
+            vel = pow(vel, 0.5)
+            dx = math.copysign(vel, dx)
+            dy = math.copysign(vel, dy)
         self.x += dx
         self.y += dy
         self.rect.x += dx

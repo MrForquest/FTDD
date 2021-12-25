@@ -1,8 +1,8 @@
 import pygame
 import math
+from game_classes.Projectile import Projectile
 
 pygame.init()
-from game_classes.Projectile import Projectile
 
 
 class Thing(pygame.sprite.Sprite):
@@ -32,8 +32,8 @@ class Thing(pygame.sprite.Sprite):
             self.x = self.player.x + 10
             self.y = self.player.y + 10
         if pygame.sprite.collide_rect(self, self.player) and \
-                self not in self.player.inventory and \
-                self.belong is False:
+            self not in self.player.inventory and \
+            self.belong is False:
             if key[pygame.K_p]:
                 self.player.inventory['just things'].append(self)
                 self.belong = True
@@ -59,9 +59,8 @@ class Weapon(Thing):
             self.rect.y = self.player.rect.y + 30
             self.x = self.player.x + 40
             self.y = self.player.y + 30
-        if pygame.sprite.collide_rect(self, self.player) and \
-                self not in self.player.inventory and \
-                self.belong is False:
+        if pygame.sprite.collide_rect(self, self.player) and self not in self.player.inventory and \
+            self.belong == False:
             if key[pygame.K_p]:
                 self.player.inventory['weapons'].append(self)
                 self.belong = True
@@ -70,10 +69,7 @@ class Weapon(Thing):
             self.screen.blit(txt, (self.rect.x - len(self.name * 3), self.rect.y - 15))
 
     def shoot(self, pos, group):
-        katx = abs(self.x - pos[0])
-        katy = abs(self.y - pos[1])
-        gip = (katx ** 2 + katy ** 2) ** 0.5
-        co = math.asin(katy / gip)
-        print(co)
+        katx = (pos[0] - self.rect.center[0])
+        katy = -(pos[1] - self.rect.center[1])
+        co = math.atan2(katy, katx)
         group.add(Projectile(self.get_cords(), co, 10, 20, True, group))
-
