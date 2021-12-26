@@ -3,6 +3,7 @@ from game_classes.GameGrid import Grid, GCell
 from game_classes.Player import Player, Camera
 from game_classes.Projectile import Projectile
 from game_classes.Game_things import Thing, Weapon
+from game_functions.Generating_level import generate_level
 
 if __name__ == '__main__':
     pygame.init()
@@ -11,11 +12,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
     group = pygame.sprite.Group()
     things = pygame.sprite.Group()
-    for i in range(15):
-        group.add(GCell((i * 40, 0), True))
-        group.add(GCell((i * 40, 600), True))
-    all_sprites = pygame.sprite.Group(*group.sprites())
-
+    all_sprites = pygame.sprite.Group(generate_level(group))
     grid = Grid(20, 20, (0, 0), grid=group)
     player = Player((300, 300), all_sprites)
     thing = Thing((200, 400), player, 'Обычный класс вещи', screen)
