@@ -20,6 +20,7 @@ class Projectile(pp.sprite.Sprite):
         self.player = player
         self.group_collide = group_collide
         self.live = True
+        self.count = 0
 
     def update(self):
         self.x += self.vx
@@ -33,5 +34,8 @@ class Projectile(pp.sprite.Sprite):
                 if hasattr(sprite, "concerning"):
                     if sprite.concerning:
                         self.live = False
+        self.count += 1
         if not self.live:
+            self.kill()
+        if self.count > self.velocity * 10000:
             self.kill()
