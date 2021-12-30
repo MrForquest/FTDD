@@ -1,4 +1,5 @@
 import pygame
+import random
 
 
 class GCell(pygame.sprite.Sprite):
@@ -9,9 +10,11 @@ class GCell(pygame.sprite.Sprite):
         self.type_id = type_id
         self.concerning = concerning
         # self.rect.size = self.size
-        self.image = pygame.Surface((self.size, self.size),
-                                    pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, pygame.Color("green"), (0, 0, self.size, self.size))
+        if self.concerning is False:
+            self.image = pygame.image.load('data/grass1.png')
+            self.image = pygame.transform.rotate(self.image, random.randrange(0, 360, 90))
+        else:
+            self.image = self.image = pygame.image.load('data/wall.png')
 
         self.rect = pygame.Rect(*coord, self.size, self.size)
         self.rect.x = coord[0]
@@ -20,7 +23,7 @@ class GCell(pygame.sprite.Sprite):
         self.y = coord[1]
 
     def draw(self, sc):
-        pygame.draw.rect(sc, (0, 0, 255), self.rect)
+        sc.blit(self.image, self.rect)
 
 
 class Grid:

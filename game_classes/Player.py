@@ -7,10 +7,9 @@ class Player(pp.sprite.Sprite):
 
     def __init__(self, coord, group_collide):
         pp.sprite.Sprite.__init__(self)
-        self.image = pp.Surface((self.size, self.size),
-                                pp.SRCALPHA, 32)
-        pp.draw.rect(self.image, pp.Color("blue"), (0, 0, self.size, self.size))
-
+        self.image1 = pp.image.load('data/player.png')
+        self.image2 = pp.image.load('data/player_left.png')
+        self.image = self.image1
         self.rect = pp.Rect(*coord, self.size, self.size)
         self.x = coord[0]
         self.y = coord[1]
@@ -27,8 +26,10 @@ class Player(pp.sprite.Sprite):
         key = pp.key.get_pressed()
         if key[pp.K_a] and self.rect.x > 0:
             dx = -vel
+            self.image = self.image2
         if key[pp.K_d] and self.rect.x < 500:
             dx = vel
+            self.image = self.image1
         if key[pp.K_w] and self.rect.y > 0:
             dy = -vel
         if key[pp.K_s] and self.rect.y < 500:
