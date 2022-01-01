@@ -12,7 +12,9 @@ class Thing(pygame.sprite.Sprite):
             self.image = pygame.surface.Surface((20, 20))
             self.image.fill((255, 255, 255))
         else:
-            self.image = image
+            self.image1 = image
+            self.image2 = pygame.transform.flip(self.image1, True, False)
+            self.image = self.image1
         self.rect = self.image.get_rect()
         self.x, self.y = cords[0], cords[1]
         self.rect.x, self.rect.y = self.x, self.y
@@ -32,8 +34,8 @@ class Thing(pygame.sprite.Sprite):
             self.x = self.player.x + 10
             self.y = self.player.y + 10
         if pygame.sprite.collide_rect(self, self.player) and \
-            self not in self.player.inventory and \
-            self.belong is False:
+                self not in self.player.inventory and \
+                self.belong is False:
             if key[pygame.K_p]:
                 self.player.inventory['just things'].append(self)
                 self.belong = True
@@ -50,17 +52,28 @@ class Weapon(Thing):
             self.image = pygame.surface.Surface((20, 20))
             self.image.fill((255, 255, 255))
         else:
-            self.image = image
+            self.image1 = image
+            self.image2 = pygame.transform.flip(self.image1, True, False)
+            self.image = self.image1
 
     def update(self):
         key = pygame.key.get_pressed()
-        if self.belong:
-            self.rect.x = self.player.rect.x + 40
-            self.rect.y = self.player.rect.y + 30
-            self.x = self.player.x + 40
-            self.y = self.player.y + 30
+        if self.belong and self.player.image is self.player.image1:
+            if self.image is self.image2:
+                self.image = self.image1
+            self.rect.x = self.player.rect.x + 25
+            self.rect.y = self.player.rect.y + 10
+            self.x = self.player.x + 25
+            self.y = self.player.y + 10
+        if self.player.image is self.player.image2 and self.belong:
+            if self.image is self.image1:
+                self.image = self.image2
+            self.rect.x = self.player.rect.x - 25
+            self.rect.y = self.player.rect.y + 10
+            self.x = self.player.x - 25
+            self.y = self.player.y + 10
         if pygame.sprite.collide_rect(self, self.player) and self not in self.player.inventory and \
-            self.belong == False:
+                self.belong is False:
             if key[pygame.K_p]:
                 self.player.inventory['weapons'].append(self)
                 self.belong = True

@@ -18,6 +18,7 @@ class Player(pp.sprite.Sprite):
         self.inventory = {'weapons': [],
                           'magicshit': [],
                           'just things': []}
+        self.hand = 0
 
     def update(self):
         dx = 0
