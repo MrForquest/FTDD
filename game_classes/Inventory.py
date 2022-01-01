@@ -4,8 +4,8 @@ import pygame
 class Inventory(pygame.sprite.Sprite):
     def __init__(self, player):
         super().__init__()
-        self.image = pygame.image.load('data/inventory.png')
-        self.frame = pygame.image.load('data/inventory_frame.png')
+        self.image = pygame.image.load('data/images/inventory.png')
+        self.frame = pygame.image.load('data/images/inventory_frame.png')
         self.rect = self.image.get_rect()
         self.rect.x = 200
         self.rect.y = 620

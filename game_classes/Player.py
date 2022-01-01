@@ -7,8 +7,8 @@ class Player(pp.sprite.Sprite):
 
     def __init__(self, coord, group_collide):
         pp.sprite.Sprite.__init__(self)
-        self.image1 = pp.image.load('data/player.png')
-        self.image2 = pp.image.load('data/player_left.png')
+        self.image1 = pp.image.load('data/images/player.png')
+        self.image2 = pp.image.load('data/images/player_left.png')
         self.image = self.image1
         self.rect = pp.Rect(*coord, self.size, self.size)
         self.x = coord[0]

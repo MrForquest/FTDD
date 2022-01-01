@@ -11,10 +11,10 @@ class GCell(pygame.sprite.Sprite):
         self.concerning = concerning
         # self.rect.size = self.size
         if self.concerning is False:
-            self.image = pygame.image.load('data/grass1.png')
+            self.image = pygame.image.load('data/images/grass1.png')
             self.image = pygame.transform.rotate(self.image, random.randrange(0, 360, 90))
         else:
-            self.image = self.image = pygame.image.load('data/wall.png')
+            self.image = self.image = pygame.image.load('data/images/wall.png')
 
         self.rect = pygame.Rect(*coord, self.size, self.size)
         self.rect.x = coord[0]

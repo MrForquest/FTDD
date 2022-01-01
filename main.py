@@ -16,13 +16,13 @@ if __name__ == '__main__':
     all_sprites = pygame.sprite.Group(generate_level(group))
     grid = Grid(20, 20, (0, 0), grid=group)
     player = Player((300, 300), all_sprites)
-    weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20, pygame.image.load('data/average_bow.png'))
+    weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20, pygame.image.load('data/images/average_bow.png'))
     all_sprites.add(weapon)
     group.add(weapon)
-    proj = Projectile((80, -40), 30, 2, 20, True, all_sprites)
+
     inventory = Inventory(player)
     all_sprites.add(player)
-    all_sprites.add(proj)
+
     camera = Camera()
 
     running = True

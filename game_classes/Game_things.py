@@ -36,7 +36,7 @@ class Thing(pygame.sprite.Sprite):
         if pygame.sprite.collide_rect(self, self.player) and \
                 self not in self.player.inventory and \
                 self.belong is False:
-            if key[pygame.K_p]:
+            if key[pygame.K_x]:
                 self.player.inventory['just things'].append(self)
                 self.belong = True
             font = pygame.font.Font(None, 22)
@@ -74,7 +74,7 @@ class Weapon(Thing):
             self.y = self.player.y + 10
         if pygame.sprite.collide_rect(self, self.player) and self not in self.player.inventory and \
                 self.belong is False:
-            if key[pygame.K_p]:
+            if key[pygame.K_x]:
                 self.player.inventory['weapons'].append(self)
                 self.belong = True
             font = pygame.font.Font(None, 22)
