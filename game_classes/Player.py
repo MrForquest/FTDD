@@ -9,6 +9,7 @@ class Player(pp.sprite.Sprite):
         pp.sprite.Sprite.__init__(self)
         self.image1 = pp.image.load('data/images/player.png')
         self.image2 = pp.image.load('data/images/player_left.png')
+
         self.image = self.image1
         self.rect = pp.Rect(*coord, self.size, self.size)
         self.x = coord[0]
@@ -46,7 +47,6 @@ class Player(pp.sprite.Sprite):
         sprites_collides = pp.sprite.spritecollide(self, self.group_collide, dokill=False)
         self.rect.x -= dx
         self.rect.y -= dy
-        count = 0
         if len(sprites_collides):
             for sprite in sprites_collides:
                 if hasattr(sprite, "concerning"):
@@ -59,8 +59,6 @@ class Player(pp.sprite.Sprite):
                             dx = math.copysign(ddx + 1, (x1 - x2))
                         else:
                             dy = math.copysign(ddy + 1, (y1 - y2))
-
-                        count += 1
 
         self.x += dx
         self.y += dy

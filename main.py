@@ -5,6 +5,7 @@ from game_classes.Projectile import Projectile
 from game_classes.Game_things import Thing, Weapon
 from game_functions.Generating_level import generate_level
 from game_classes.Inventory import Inventory
+from game_classes.Enemy import Enemy
 
 if __name__ == '__main__':
     pygame.init()
@@ -15,14 +16,16 @@ if __name__ == '__main__':
     things = pygame.sprite.Group()
     all_sprites = pygame.sprite.Group(generate_level(group))
     grid = Grid(20, 20, (0, 0), grid=group)
-    player = Player((300, 300), all_sprites)
-    weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20, pygame.image.load('data/images/average_bow.png'))
+    player = Player((500, 300), all_sprites)
+    enemy = Enemy((200, 300), all_sprites)
+    weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20,
+                    pygame.image.load('data/images/average_bow.png'))
     all_sprites.add(weapon)
     group.add(weapon)
 
     inventory = Inventory(player)
     all_sprites.add(player)
-
+    all_sprites.add(enemy)
     camera = Camera()
 
     running = True
