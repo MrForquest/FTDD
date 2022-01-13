@@ -1,6 +1,7 @@
 import pygame
 import math
-from game_classes.Projectile import Projectile
+from game_classes.Projectile import Projectile, EmperorProjectile
+
 
 pygame.init()
 
@@ -34,8 +35,8 @@ class Thing(pygame.sprite.Sprite):
             self.x = self.player.x + 10
             self.y = self.player.y + 10
         if pygame.sprite.collide_rect(self, self.player) and \
-                self not in self.player.inventory and \
-                self.belong is False:
+            self not in self.player.inventory and \
+            self.belong is False:
             if key[pygame.K_x]:
                 self.player.inventory['just things'].append(self)
                 self.belong = True
@@ -73,7 +74,7 @@ class Weapon(Thing):
             self.x = self.player.x - 25
             self.y = self.player.y + 10
         if pygame.sprite.collide_rect(self, self.player) and self not in self.player.inventory and \
-                self.belong is False:
+            self.belong is False:
             if key[pygame.K_x]:
                 self.player.inventory['weapons'].append(self)
                 self.belong = True
@@ -86,3 +87,12 @@ class Weapon(Thing):
         katy = -(pos[1] - self.rect.center[1])
         co = math.atan2(katy, katx)
         group.add(Projectile(self.get_cords(), co, 10, 20, True, group))
+
+
+class Emperor(Weapon):
+    def shoot(self, pos, group):
+        global enemies
+        katx = (pos[0] - self.rect.center[0])
+        katy = -(pos[1] - self.rect.center[1])
+        co = math.atan2(katy, katx)
+        group.add(EmperorProjectile(self.get_cords(), co, 10, 20, True, group, enemies))

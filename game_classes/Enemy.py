@@ -1,5 +1,6 @@
 import pygame as pp
 import math
+from game_classes.utilities import Line
 
 
 class Enemy(pp.sprite.Sprite):
@@ -38,21 +39,22 @@ class Enemy(pp.sprite.Sprite):
                     katx = (sprite.x - self.x)
                     katy = (sprite.y - self.y)
                     angle = math.atan2(katy, katx)
-                    max_dist = pow(katx ** 2 + katy ** 2, 0.5)
-                    sx = math.cos(angle)
-                    sy = math.sin(angle)
-                    ps = [(sx * i + self.x, sy * i + self.y) for i in range(1, round(max_dist), 20)]
 
+                    boxes = filter(lambda b: getattr(b, "concerning", False), sprites_collides)
+                    lines = list()
+                    [lines.extend(
+                        [Line((b.x, b.y), (b.x + b.rect.width, b.y + b.rect.height)),
+                         Line((b.x, b.y + b.rect.height), (b.x + b.rect.width, b.y))])
+                        for b in boxes]
+                    visual_line = Line((self.x, self.y), (sprite.x, sprite.y))
+                    inters = set(map(lambda li: visual_line.intersection(li), lines))
+                    if inters:
+                        inters.discard(False)
+                        if inters:
+                            continue
                     dx = math.cos(angle) * velocity
                     dy = math.sin(angle) * velocity
-                    val = False
-                    for spr in self.group_collide:
-                        rect = pp.Rect(spr.x, spr.y, spr.rect.width, spr.rect.height)
-                        val = any(map(lambda p: rect.collidepoint(p) and getattr(spr, "concerning",
-                                                                                 False), ps))
-                        if val:
-                            dx = dy = 0
-                            break
+
         self.x += dx
         self.y += dy
         self.rect.x += dx

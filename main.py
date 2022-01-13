@@ -14,18 +14,20 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
     group = pygame.sprite.Group()
     things = pygame.sprite.Group()
+    enemies = pygame.sprite.Group()
     all_sprites = pygame.sprite.Group(generate_level(group))
     grid = Grid(20, 20, (0, 0), grid=group)
     player = Player((500, 300), all_sprites)
-    enemy = Enemy((200, 300), all_sprites)
+    enemies.add(Enemy((200, 150), all_sprites))
     weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20,
                     pygame.image.load('data/images/average_bow.png'))
+    # all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20,  pygame.image.load('data/images/average_bow.png')))
     all_sprites.add(weapon)
     group.add(weapon)
 
     inventory = Inventory(player)
     all_sprites.add(player)
-    all_sprites.add(enemy)
+    all_sprites.add(enemies)
     camera = Camera()
 
     running = True
@@ -53,5 +55,5 @@ if __name__ == '__main__':
         inventory.update(screen)
 
         clock.tick(fps)
-        pygame.display.flip()
+        pygame.display.update()
     pygame.quit()
