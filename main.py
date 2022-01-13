@@ -5,6 +5,7 @@ from game_classes.Projectile import Projectile
 from game_classes.Game_things import Thing, Weapon
 from game_functions.Generating_level import generate_level
 from game_classes.Inventory import Inventory
+from game_classes.NPC import NPC
 from game_classes.Enemy import Enemy
 
 if __name__ == '__main__':
@@ -17,6 +18,11 @@ if __name__ == '__main__':
     enemies = pygame.sprite.Group()
     all_sprites = pygame.sprite.Group(generate_level(group))
     grid = Grid(20, 20, (0, 0), grid=group)
+    player = Player((300, 300), all_sprites)
+    weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20, pygame.image.load('data/images/average_bow.png'))
+    first_NPC = NPC(['Привет', 'Иди отсюда', 'Давай'], (400, 300), player, screen)
+    all_sprites.add(weapon, first_NPC)
+    group.add(weapon, first_NPC)
     player = Player((500, 300), all_sprites)
     enemies.add(Enemy((200, 150), all_sprites))
     weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20,
