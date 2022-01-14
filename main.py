@@ -15,7 +15,7 @@ if __name__ == '__main__':
     size = width, height = 800, 700
     screen = pygame.display.set_mode(size)
 
-    all_sprites.add(generate_level(group))
+    all_sprites.add(generate_level(group, screen, 15))
     grid = Grid(20, 20, (0, 0), grid=group)
     player = Player((250, 300), all_sprites)
     for i in group.sprites():
@@ -25,12 +25,14 @@ if __name__ == '__main__':
                     25, pygame.image.load('data/images/average_bow.png'))
     weapon2 = Weapon((350, 400), player, 'Обычный лук', screen, 20,
                      25, pygame.image.load('data/images/average_magic_stick.png'))
-    group.add(Portal(pygame.image.load('data/images/portal1.png'), (0, 8 * 40), player, group, screen, all_sprites))
+    group.add(
+        Portal(pygame.image.load('data/images/portal1.png'), (0, 8 * 40), player, group, screen,
+               all_sprites))
     all_sprites.add(*group.sprites())
 
     all_sprites.add(weapon, weapon2)
 
-    all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20,
+    all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20, 25,
                             pygame.image.load('data/images/average_bow.png')))
     all_sprites.add(weapon)
     group.add(weapon)
@@ -52,11 +54,12 @@ if __name__ == '__main__':
                 if event.button == 1 and player.inventory['weapons'] != []:
                     if isinstance(player.hand, Weapon):
                         player.hand.shoot(event.pos, all_sprites)
-            if event.type == pygame.MOUSEWHEEL:
-                if event.y > 0:
+
+            if event.type == pygame.MOUSEBUTTONDOWN and (event.button == 5 or event.button == 4):
+                if event.button == 5:
                     inventory.slot_use = (inventory.slot_use + 1) % 4
                     inventory.update(screen)
-                elif event.y < 0:
+                elif event.button == 4:
                     inventory.slot_use = (inventory.slot_use - 1) % 4
                     inventory.update(screen)
         screen.fill((0, 0, 0))
