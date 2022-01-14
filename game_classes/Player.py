@@ -29,12 +29,12 @@ class Player(pp.sprite.Sprite):
         if key[pp.K_a] and self.rect.x > 0:
             dx = -vel
             self.image = self.image2
-        if key[pp.K_d] and self.rect.x < 500:
+        if key[pp.K_d]:
             dx = vel
             self.image = self.image1
-        if key[pp.K_w] and self.rect.y > 0:
+        if key[pp.K_w]:
             dy = -vel
-        if key[pp.K_s] and self.rect.y < 500:
+        if key[pp.K_s]:
             dy = vel
         if dx != 0 and dy != 0:
             vel = pow(vel, 0.5)

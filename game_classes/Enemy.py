@@ -1,12 +1,13 @@
 import pygame as pp
 import math
 from game_classes.utilities import Line
+from data_file import all_sprites
 
 
 class Enemy(pp.sprite.Sprite):
     size = 40
 
-    def __init__(self, coord, group_collide):
+    def __init__(self, coord, weapon):
         pp.sprite.Sprite.__init__(self)
         self.image1 = pp.image.load('data/images/player.png')
         self.image2 = pp.image.load('data/images/player_left.png')
@@ -15,7 +16,7 @@ class Enemy(pp.sprite.Sprite):
         self.x = coord[0]
         self.y = coord[1]
         self.hp = 100
-        self.group_collide = group_collide
+        self.weapon = weapon
         self.hand = 0
 
         self.radar = pp.sprite.Sprite()
@@ -26,13 +27,13 @@ class Enemy(pp.sprite.Sprite):
         self.radar.rect.center = self.rect.center
         self.radar.x = (self.radar.rect.width - self.rect.width) // 2
         self.radar.y = (self.radar.rect.height - self.rect.height) // 2
-        group_collide.add(self.radar)
+        all_sprites.add(self.radar)
 
     def update(self):
         velocity = 1.6
         dx = 0
         dy = 0
-        sprites_collides = pp.sprite.spritecollide(self.radar, self.group_collide, dokill=False)
+        sprites_collides = pp.sprite.spritecollide(self.radar, all_sprites, dokill=False)
         if len(sprites_collides):
             for sprite in sprites_collides:
                 if sprite.__class__.__name__ == "Player":
@@ -59,7 +60,7 @@ class Enemy(pp.sprite.Sprite):
         self.y += dy
         self.rect.x += dx
         self.rect.y += dy
-        sprites_collides = pp.sprite.spritecollide(self, self.group_collide, dokill=False)
+        sprites_collides = pp.sprite.spritecollide(self, all_sprites, dokill=False)
         self.rect.x -= dx
         self.rect.y -= dy
         if len(sprites_collides):

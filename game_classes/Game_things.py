@@ -1,7 +1,7 @@
 import pygame
 import math
 from game_classes.Projectile import Projectile, EmperorProjectile
-
+from data_file import enemies, group, things, all_sprites
 
 pygame.init()
 
@@ -91,7 +91,6 @@ class Weapon(Thing):
 
 class Emperor(Weapon):
     def shoot(self, pos, group):
-        global enemies
         katx = (pos[0] - self.rect.center[0])
         katy = -(pos[1] - self.rect.center[1])
         co = math.atan2(katy, katx)

@@ -37,7 +37,7 @@ class Projectile(pp.sprite.Sprite):
         self.count += 1
         if not self.live:
             self.kill()
-        if self.count > self.velocity * 10000:
+        if self.count > self.velocity * 50:
             self.kill()
 
 
@@ -53,9 +53,10 @@ class EmperorProjectile(Projectile):
         if len(self.enemies):
             nearest_enemy = min(self.enemies, key=lambda enemy: ((enemy.x - self.x) ** 2 + (
                 enemy.y - self.y) ** 2) ** 0.5)
-            katx = nearest_enemy.x - self.x
-            katy = nearest_enemy.y - self.y
-            angle = math.atan2(katx, katy)
+            katx = (nearest_enemy.x - self.x)
+            katy = (nearest_enemy.y - self.y)
+            angle = math.atan2(katy, katx)
+
             dx = math.cos(angle) * self.velocity
             dy = math.sin(angle) * self.velocity
             if abs(katx) < 5 and abs(katy) < 5:
@@ -72,9 +73,8 @@ class EmperorProjectile(Projectile):
                 if hasattr(sprite, "concerning"):
                     if sprite.concerning:
                         self.live = False
-
         self.count += 1
         if not self.live:
             self.kill()
-        if self.count > self.velocity * 10000:
+        if self.count > self.velocity * 50:
             self.kill()

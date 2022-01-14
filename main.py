@@ -1,25 +1,24 @@
 import pygame
 from game_classes.GameGrid import Grid, GCell
 from game_classes.Player import Player, Camera
-from game_classes.Projectile import Projectile
-from game_classes.Game_things import Thing, Weapon
+from game_classes.Game_things import Thing, Weapon, Emperor
 from game_functions.Generating_level import generate_level
 from game_classes.Inventory import Inventory
 from game_classes.NPC import NPC
 from game_classes.Enemy import Enemy
+from data_file import enemies, group, things, all_sprites
 
 if __name__ == '__main__':
     pygame.init()
     pygame.display.set_caption('Движущийся квадрат')
     size = width, height = 800, 700
     screen = pygame.display.set_mode(size)
-    group = pygame.sprite.Group()
-    things = pygame.sprite.Group()
-    enemies = pygame.sprite.Group()
-    all_sprites = pygame.sprite.Group(generate_level(group))
+
+    all_sprites.add(generate_level(group))
     grid = Grid(20, 20, (0, 0), grid=group)
     player = Player((300, 300), all_sprites)
-    weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20, pygame.image.load('data/images/average_bow.png'))
+    weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20,
+                    pygame.image.load('data/images/average_bow.png'))
     first_NPC = NPC(['Привет', 'Иди отсюда', 'Давай'], (400, 300), player, screen)
     all_sprites.add(weapon, first_NPC)
     group.add(weapon, first_NPC)
@@ -27,7 +26,8 @@ if __name__ == '__main__':
     enemies.add(Enemy((200, 150), all_sprites))
     weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20,
                     pygame.image.load('data/images/average_bow.png'))
-    # all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20,  pygame.image.load('data/images/average_bow.png')))
+    all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20,
+                            pygame.image.load('data/images/average_bow.png')))
     all_sprites.add(weapon)
     group.add(weapon)
 
