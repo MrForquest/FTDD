@@ -1,5 +1,7 @@
+import pygame
 import pygame as pp
 import math
+from game_classes.Game_things import Weapon
 
 
 class Player(pp.sprite.Sprite):
@@ -17,15 +19,17 @@ class Player(pp.sprite.Sprite):
         self.hp = 100
         self.group_collide = group_collide
         self.inventory = {'weapons': [],
-                          'magicshit': [],
-                          'just things': []}
-        self.hand = 0
+                          'magicshit': []
+                          }
+        self.hand = None
 
     def update(self):
         dx = 0
         dy = 0
         vel = 2
         key = pp.key.get_pressed()
+        if isinstance(self.hand, Weapon):
+            self.hand.draw()
         if key[pp.K_a] and self.rect.x > 0:
             dx = -vel
             self.image = self.image2

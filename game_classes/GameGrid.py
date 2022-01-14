@@ -5,14 +5,19 @@ import random
 class GCell(pygame.sprite.Sprite):
     size = 40
 
-    def __init__(self, coord, concerning, type_id=None):
+    def __init__(self, coord, concerning, biome, type_id=None):
         super().__init__()
         self.type_id = type_id
         self.concerning = concerning
         # self.rect.size = self.size
         if self.concerning is False:
-            self.image = pygame.image.load('data/images/grass1.png')
-            self.image = pygame.transform.rotate(self.image, random.randrange(0, 360, 90))
+            if biome is None:
+                self.image = pygame.image.load('data/images/grass1.png')
+                self.image = pygame.transform.rotate(self.image, random.randrange(0, 360, 90))
+            elif biome == 'hell':
+                print('o')
+                self.image = pygame.image.load('data/images/hell_tile.png')
+                self.image = pygame.transform.rotate(self.image, random.randrange(0, 360, 90))
         else:
             self.image = self.image = pygame.image.load('data/images/wall.png')
 

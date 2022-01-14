@@ -46,9 +46,10 @@ class Thing(pygame.sprite.Sprite):
 
 
 class Weapon(Thing):
-    def __init__(self, cords, pl, name, screen, damage, image=None):
+    def __init__(self, cords, pl, name, screen, damage, price, image=None):
         Thing.__init__(self, cords, pl, name, screen)
         self.damage = damage
+        self.price = price
         if image is None:
             self.image = pygame.surface.Surface((20, 20))
             self.image.fill((255, 255, 255))
@@ -59,20 +60,6 @@ class Weapon(Thing):
 
     def update(self):
         key = pygame.key.get_pressed()
-        if self.belong and self.player.image is self.player.image1:
-            if self.image is self.image2:
-                self.image = self.image1
-            self.rect.x = self.player.rect.x + 25
-            self.rect.y = self.player.rect.y + 10
-            self.x = self.player.x + 25
-            self.y = self.player.y + 10
-        if self.player.image is self.player.image2 and self.belong:
-            if self.image is self.image1:
-                self.image = self.image2
-            self.rect.x = self.player.rect.x - 25
-            self.rect.y = self.player.rect.y + 10
-            self.x = self.player.x - 25
-            self.y = self.player.y + 10
         if pygame.sprite.collide_rect(self, self.player) and self not in self.player.inventory and \
             self.belong is False:
             if key[pygame.K_x]:
@@ -81,6 +68,22 @@ class Weapon(Thing):
             font = pygame.font.Font(None, 22)
             txt = font.render(self.name, False, (255, 255, 255))
             self.screen.blit(txt, (self.rect.x - len(self.name * 3), self.rect.y - 15))
+
+    def draw(self):
+        if self.player.image is self.player.image1:
+            if self.image is self.image2:
+                self.image = self.image1
+            self.rect.x = self.player.rect.x + 25
+            self.rect.y = self.player.rect.y + 10
+            self.x = self.player.x + 25
+            self.y = self.player.y + 10
+        if self.player.image is self.player.image2:
+            if self.image is self.image1:
+                self.image = self.image2
+            self.rect.x = self.player.rect.x - 25
+            self.rect.y = self.player.rect.y + 10
+            self.x = self.player.x - 25
+            self.y = self.player.y + 10
 
     def shoot(self, pos, group):
         katx = (pos[0] - self.rect.center[0])
