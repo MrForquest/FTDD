@@ -17,6 +17,7 @@ class Inventory(pygame.sprite.Sprite):
         self.slot_use = 0
         self.player.hand = self.slot[self.slot_use]
         self.frame_rect = self.frame.get_rect()
+        self.layer = 100
 
     def update(self, sc):
         sc.blit(self.image, self.rect)

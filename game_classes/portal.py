@@ -13,9 +13,9 @@ class Portal(pygame.sprite.Sprite):
         self.sc = scr
         self.x, self.y = self.rect.x, self.rect.y
         self.al = alll
+        self.layer = 4
 
     def update(self):
         if pygame.sprite.collide_rect(self, self.pl):
             self.al.add(generate_level(self.group, self.sc, 25, 'hell'))
             self.pl.x, self.pl.y = 250, 300
-

@@ -1,3 +1,6 @@
+import pygame
+
+
 class Line:
     def __init__(self, p1, p2):
         self.p1 = (round(p1[0]), round(p1[1]))
@@ -22,3 +25,24 @@ class Line:
             if (x in rx1) and (x in rx2) and (y in ry1) and (y in ry2):
                 return x, y
         return False
+
+
+class LayerGroup(pygame.sprite.Group):
+    """
+    ПРАВИЛА РАСТАНОВКИ СЛОЁВ
+    0 - 9  - мир: стены, земля и другое окружение
+    10 - 19  - снаряды
+    20 - 29  - герой, экипировка, враги, NPC
+    100  - инвентарь
+
+    правила могут нарушать в РЕДКИХ случаях
+    """
+
+    def get_layer(self, spr):
+        return spr.layer
+
+    def draw(self, surface):
+        sprites = self.sprites()
+        for spr in sorted(sprites, key=self.get_layer):
+            self.spritedict[spr] = surface.blit(spr.image, spr.rect)
+        self.last_group = []

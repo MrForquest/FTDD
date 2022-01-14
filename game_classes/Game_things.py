@@ -23,6 +23,7 @@ class Thing(pygame.sprite.Sprite):
         self.name = name
         self.screen = screen
         self.belong = False
+        self.layer = 24
 
     def get_cords(self):
         return [self.x, self.y]

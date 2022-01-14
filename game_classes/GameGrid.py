@@ -26,6 +26,7 @@ class GCell(pygame.sprite.Sprite):
         self.rect.y = coord[1]
         self.x = coord[0]
         self.y = coord[1]
+        self.layer = 3
 
     def draw(self, sc):
         sc.blit(self.image, self.rect)

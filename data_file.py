@@ -1,6 +1,7 @@
 import pygame
+from game_classes.utilities import LayerGroup
 
-enemies = pygame.sprite.Group()
-group = pygame.sprite.Group()
-things = pygame.sprite.Group()
-all_sprites = pygame.sprite.Group()
+enemies = LayerGroup()
+group = LayerGroup()
+things = LayerGroup()
+all_sprites = LayerGroup()

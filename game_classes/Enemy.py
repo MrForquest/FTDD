@@ -18,6 +18,7 @@ class Enemy(pp.sprite.Sprite):
         self.hp = 100
         self.weapon = weapon
         self.hand = 0
+        self.layer = 23
 
         self.radar = pp.sprite.Sprite()
         side = self.size * 12

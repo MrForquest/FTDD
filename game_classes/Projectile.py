@@ -21,6 +21,7 @@ class Projectile(pp.sprite.Sprite):
         self.group_collide = group_collide
         self.live = True
         self.count = 0
+        self.layer = 13
 
     def update(self):
         self.x += self.vx

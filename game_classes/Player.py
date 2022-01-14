@@ -1,4 +1,3 @@
-import pygame
 import pygame as pp
 import math
 from game_classes.Game_things import Weapon
@@ -21,6 +20,7 @@ class Player(pp.sprite.Sprite):
         self.inventory = {'weapons': [],
                           'magicshit': []
                           }
+        self.layer = 23
         self.hand = None
 
     def update(self):

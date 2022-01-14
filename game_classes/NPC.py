@@ -16,6 +16,7 @@ class NPC(pygame.sprite.Sprite):
         self.screen = screen
         self.x, self.y = self.rect.x, self.rect.y
         self.inventory = []
+        self.layer = 23
 
     def update(self):
         self.word = self.diolog[self.count]
