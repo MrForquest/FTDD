@@ -47,10 +47,13 @@ class Thing(pygame.sprite.Sprite):
 
 
 class Weapon(Thing):
-    def __init__(self, cords, pl, name, screen, damage, price, image=None):
+    def __init__(self, cords, pl, name, screen, damage, price, image=None, image_projectile=None,
+                 size_projectile=20, velocity_projectile=10):
         Thing.__init__(self, cords, pl, name, screen)
         self.damage = damage
         self.price = price
+        self.size_projectile = size_projectile
+        self.velocity_projectile = velocity_projectile
         if image is None:
             self.image = pygame.surface.Surface((20, 20))
             self.image.fill((255, 255, 255))
@@ -59,6 +62,7 @@ class Weapon(Thing):
             self.image2 = pygame.transform.flip(self.image1, True, False)
             self.image = self.image1
             self.throwed = False
+        self.image_projectile = image_projectile
 
     def update(self):
         if self.throwed:
@@ -93,13 +97,17 @@ class Weapon(Thing):
         katx = (pos[0] - self.rect.center[0])
         katy = (pos[1] - self.rect.center[1])
         co = math.atan2(katy, katx)
-        group.add(Projectile(self.get_cords(), co, 10, 20, self.player, group, self.damage))
+        group.add(Projectile(self.get_cords(), co, self.velocity_projectile, self.size_projectile,
+                             self.player, group,
+                             self.damage,
+                             self.image_projectile))
 
 
 class Emperor(Weapon):
     def shoot(self, pos, group_):
         katx = (pos[0] - self.rect.center[0])
-        katy = -(pos[1] - self.rect.center[1])
+        katy = (pos[1] - self.rect.center[1])
         co = math.atan2(katy, katx)
         group_.add(
-            EmperorProjectile(self.get_cords(), co, 10, 20, self.player, group_, enemies, self.damage))
+            EmperorProjectile(self.get_cords(), co, 10, 15, self.player, group_, self.damage,
+                              self.image_projectile))

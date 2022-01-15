@@ -1,15 +1,20 @@
 import pygame as pp
 import math
-from data_file import all_sprites
+from data_file import all_sprites, enemies
 
 
 class Projectile(pp.sprite.Sprite):
-    def __init__(self, coord, course, velocity, size, player, group_collide, damage):
+    def __init__(self, coord, course, velocity, size, player, group_collide, damage, image=None):
         pp.sprite.Sprite.__init__(self, all_sprites)
         self.size = size
-        self.image = pp.Surface((self.size, self.size),
-                                pp.SRCALPHA, 32)
-        pp.draw.rect(self.image, pp.Color("red"), (0, 0, self.size, self.size))
+
+        if image is None:
+            self.image = pp.Surface((self.size, self.size),
+                                    pp.SRCALPHA, 32)
+            pp.draw.rect(self.image, pp.Color("red"), (0, 0, self.size, self.size))
+        else:
+            self.image = pp.transform.scale(image, (self.size, self.size))
+
         self.rect = pp.Rect(*coord, self.size, self.size)
         self.x = coord[0]
         self.y = coord[1]
@@ -46,15 +51,14 @@ class Projectile(pp.sprite.Sprite):
 
 class EmperorProjectile(Projectile):
     def __init__(self, *args):
-        super(EmperorProjectile, self).__init__(*args[:len(args) - 2], args[-1])
-        self.enemies = args[-2]
+        super(EmperorProjectile, self).__init__(*args)
 
     def update(self):
         dx = 0
         dy = 0
 
-        if len(self.enemies):
-            nearest_enemy = min(self.enemies, key=lambda enemy: ((enemy.x - self.x) ** 2 + (
+        if len(enemies):
+            nearest_enemy = min(enemies, key=lambda enemy: ((enemy.x - self.x) ** 2 + (
                 enemy.y - self.y) ** 2) ** 0.5)
             katx = (nearest_enemy.x - self.x) + nearest_enemy.rect.width // 2
             katy = (nearest_enemy.y - self.y) + nearest_enemy.rect.height // 2

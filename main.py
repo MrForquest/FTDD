@@ -21,11 +21,13 @@ if __name__ == '__main__':
     for i in group.sprites():
         if isinstance(i, NPC):
             i.player = player
-    weapon = Weapon((300, 400), player, 'Обычный лук', screen, 20,
-                    25, pygame.image.load('data/images/average_bow.png'))
-    weapon2 = Weapon((350, 400), player, 'Обычный лук', screen, 20,
-                     25, pygame.image.load('data/images/average_magic_stick.png'))
-    weapon_enemy = Weapon((350, 400), player, 'Вражеский лук', screen, 20,
+    weapon = Weapon((300, 400), player, 'Лук тёмного пламени', screen, 40,
+                    25, pygame.image.load('data/images/average_bow.png'),
+                    pygame.image.load('data/images/dark_flame.png'), 40, 7)
+    weapon2 = Weapon((350, 400), player, 'Посох Эндера', screen, 20,
+                     25, pygame.image.load('data/images/average_magic_stick.png'),
+                     pygame.image.load('data/images/enderperl.png'), 30, 10)
+    weapon_enemy = Weapon((350, 400), player, 'Вражеский лук', screen, 25,
                           25, pygame.image.load('data/images/average_magic_stick.png'))
     all_sprites.add(
         Portal(pygame.image.load('data/images/portal1.png'), (-80, 8 * 40), player, group, screen,
@@ -35,7 +37,8 @@ if __name__ == '__main__':
     all_sprites.add(weapon, weapon2, weapon_enemy)
 
     all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20, 25,
-                            pygame.image.load('data/images/average_bow.png')))
+                            pygame.image.load('data/images/emperor.png'),
+                            pygame.image.load('data/images/emperor_projectile.png')))
     all_sprites.add(weapon)
     group.add(weapon)
     enemy = Enemy((250, 600), weapon_enemy)
