@@ -27,8 +27,8 @@ if __name__ == '__main__':
                      25, pygame.image.load('data/images/average_magic_stick.png'))
     weapon_enemy = Weapon((350, 400), player, 'Вражеский лук', screen, 20,
                           25, pygame.image.load('data/images/average_magic_stick.png'))
-    group.add(
-        Portal(pygame.image.load('data/images/portal1.png'), (0, 8 * 40), player, group, screen,
+    all_sprites.add(
+        Portal(pygame.image.load('data/images/portal1.png'), (-80, 8 * 40), player, group, screen,
                all_sprites))
     all_sprites.add(*group.sprites())
 
@@ -40,6 +40,7 @@ if __name__ == '__main__':
     group.add(weapon)
     enemy = Enemy((250, 600), weapon_enemy)
     enemies.add(enemy)
+
     inventory = Inventory(player)
     all_sprites.add(player)
     all_sprites.add(enemies)
@@ -65,7 +66,7 @@ if __name__ == '__main__':
                 elif event.button == 4:
                     inventory.slot_use = (inventory.slot_use - 1) % 4
                     inventory.update(screen)
-        screen.fill((0, 0, 0))
+        screen.fill((33, 33, 33))
 
         player_coord = player.get_cords()
         camera.draw(screen, player_coord, all_sprites)

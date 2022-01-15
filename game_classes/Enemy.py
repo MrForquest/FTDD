@@ -2,6 +2,7 @@ import pygame as pp
 import math
 from game_classes.utilities import Line
 from data_file import all_sprites
+from game_classes.Projectile import Projectile
 
 
 class Enemy(pp.sprite.Sprite):
@@ -25,7 +26,7 @@ class Enemy(pp.sprite.Sprite):
         self.count_shooting = 0
 
         self.radar = pp.sprite.Sprite()
-        side = self.size * 12
+        side = self.size * 17
         self.radar.image = pp.Surface((side, side), pp.SRCALPHA, 32)
         pp.draw.rect(self.radar.image, pp.Color("red"), (0, 0, side, side), 5)
         self.radar.rect = pp.Rect(*self.rect.center, side, side)
@@ -33,9 +34,14 @@ class Enemy(pp.sprite.Sprite):
         self.radar.x = (self.radar.rect.width - self.rect.width) // 2
         self.radar.y = (self.radar.rect.height - self.rect.height) // 2
         all_sprites.add(self.radar)
+        self.cooldown_count = 60
+        self.cooldown_flag = True
 
     def update(self):
-        velocity = 1.6
+        if self.hp <= 0:
+            self.radar.kill()
+            self.kill()
+        velocity = 0.8
         dx = 0
         dy = 0
         sprites_collides = pp.sprite.spritecollide(self.radar, all_sprites, dokill=False)
@@ -91,6 +97,17 @@ class Enemy(pp.sprite.Sprite):
                             dx = math.copysign(ddx + 1, (x1 - x2))
                         else:
                             dy = math.copysign(ddy + 1, (y1 - y2))
+                if sprite.__class__.__name__ == 'Projectile' and \
+                        self.cooldown_flag and \
+                        self.cooldown_count == 60:
+                    self.cooldown_count = 0
+                    self.cooldown_flag = False
+                    self.hp -= sprite.damage
+                if self.cooldown_flag is False:
+                    self.cooldown_count += 1
+                if self.cooldown_count == 60:
+                    self.cooldown_flag = True
+
         self.x += dx
         self.y += dy
         self.radar.x = self.x - (self.radar.rect.width - self.rect.width) // 2
