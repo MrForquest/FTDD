@@ -16,9 +16,13 @@ class Enemy(pp.sprite.Sprite):
         self.x = coord[0]
         self.y = coord[1]
         self.hp = 100
-        self.weapon = weapon
-        self.hand = 0
+        self.inventory = dict()
+        self.hand = weapon
+        self.hand.player = self
+        self.hand.belong = True
         self.layer = 23
+        self.effect_dist = self.size * 5
+        self.count_shooting = 0
 
         self.radar = pp.sprite.Sprite()
         side = self.size * 12
@@ -54,8 +58,19 @@ class Enemy(pp.sprite.Sprite):
                         inters.discard(False)
                         if inters:
                             continue
-                    dx = math.cos(angle) * velocity
-                    dy = math.sin(angle) * velocity
+                    dist = pow(katx ** 2 + katy ** 2, 0.5)
+                    if dist >= self.effect_dist:
+                        dx = math.cos(angle) * velocity
+                        dy = math.sin(angle) * velocity
+                    else:
+                        self.count_shooting+=1
+                        if self.count_shooting >= 20:
+                            self.hand.shoot(sprite.rect.center, all_sprites)
+                            self.count_shooting = 0
+        if dx > 0:
+            self.image = self.image1
+        elif dx < 0:
+            self.image = self.image2
 
         self.x += dx
         self.y += dy
@@ -80,6 +95,7 @@ class Enemy(pp.sprite.Sprite):
         self.y += dy
         self.radar.x = self.x - (self.radar.rect.width - self.rect.width) // 2
         self.radar.y = self.y - (self.radar.rect.height - self.rect.height) // 2
+        self.hand.draw()
 
     def get_cords(self):
         return [self.x, self.y]

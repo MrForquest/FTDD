@@ -46,4 +46,3 @@ class Grid:
 
     def draw(self, sc, coord_center):
         self.grid.draw(sc)
-        # self.grid.draw(sc)

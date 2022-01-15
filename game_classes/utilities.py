@@ -34,12 +34,11 @@ class LayerGroup(pygame.sprite.Group):
     10 - 19  - снаряды
     20 - 29  - герой, экипировка, враги, NPC
     100  - инвентарь
-
     правила могут нарушать в РЕДКИХ случаях
     """
 
     def get_layer(self, spr):
-        return spr.layer
+        return getattr(spr, "layer", 100)
 
     def draw(self, surface):
         sprites = self.sprites()

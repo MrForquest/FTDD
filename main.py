@@ -25,18 +25,21 @@ if __name__ == '__main__':
                     25, pygame.image.load('data/images/average_bow.png'))
     weapon2 = Weapon((350, 400), player, 'Обычный лук', screen, 20,
                      25, pygame.image.load('data/images/average_magic_stick.png'))
+    weapon_enemy = Weapon((350, 400), player, 'Вражеский лук', screen, 20,
+                          25, pygame.image.load('data/images/average_magic_stick.png'))
     group.add(
         Portal(pygame.image.load('data/images/portal1.png'), (0, 8 * 40), player, group, screen,
                all_sprites))
     all_sprites.add(*group.sprites())
 
-    all_sprites.add(weapon, weapon2)
+    all_sprites.add(weapon, weapon2, weapon_enemy)
 
     all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20, 25,
                             pygame.image.load('data/images/average_bow.png')))
     all_sprites.add(weapon)
     group.add(weapon)
-
+    enemy = Enemy((250, 600), weapon_enemy)
+    enemies.add(enemy)
     inventory = Inventory(player)
     all_sprites.add(player)
     all_sprites.add(enemies)

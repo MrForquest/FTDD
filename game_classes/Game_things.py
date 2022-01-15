@@ -86,16 +86,16 @@ class Weapon(Thing):
             self.x = self.player.x - 25
             self.y = self.player.y + 10
 
-    def shoot(self, pos, group):
+    def shoot(self, pos, group_):
         katx = (pos[0] - self.rect.center[0])
-        katy = -(pos[1] - self.rect.center[1])
+        katy = (pos[1] - self.rect.center[1])
         co = math.atan2(katy, katx)
-        group.add(Projectile(self.get_cords(), co, 10, 20, True, group))
+        group_.add(Projectile(self.get_cords(), co, 10, 20, True, group_))
 
 
 class Emperor(Weapon):
-    def shoot(self, pos, group):
+    def shoot(self, pos, group_):
         katx = (pos[0] - self.rect.center[0])
         katy = -(pos[1] - self.rect.center[1])
         co = math.atan2(katy, katx)
-        group.add(EmperorProjectile(self.get_cords(), co, 10, 20, True, group, enemies))
+        group_.add(EmperorProjectile(self.get_cords(), co, 10, 20, True, group_, enemies))

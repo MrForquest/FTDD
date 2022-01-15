@@ -12,7 +12,7 @@ class Projectile(pp.sprite.Sprite):
         self.rect = pp.Rect(*coord, self.size, self.size)
         self.x = coord[0]
         self.y = coord[1]
-        self.course = -course
+        self.course = course
         self.velocity = velocity
         angle = self.course
         self.vx = math.cos(angle) * self.velocity
