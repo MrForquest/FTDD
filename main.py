@@ -15,7 +15,7 @@ if __name__ == '__main__':
     size = width, height = 800, 700
     screen = pygame.display.set_mode(size)
 
-    all_sprites.add(generate_level(group, screen, 15))
+    generate_level(group, screen, 15)
     grid = Grid(20, 20, (0, 0), grid=group)
     player = Player((250, 300), all_sprites)
     for i in group.sprites():
@@ -39,11 +39,9 @@ if __name__ == '__main__':
     all_sprites.add(weapon)
     group.add(weapon)
     enemy = Enemy((250, 600), weapon_enemy)
-    enemies.add(enemy)
 
     inventory = Inventory(player)
     all_sprites.add(player)
-    all_sprites.add(enemies)
     camera = Camera()
 
     running = True

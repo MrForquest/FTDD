@@ -3,6 +3,7 @@ from game_classes import GameGrid
 from game_classes.NPC import NPC
 from game_classes.Enemy import Enemy
 from game_classes.Game_things import Weapon
+from data_file import enemies
 import pygame
 
 
@@ -21,11 +22,16 @@ def generate_level(group, screen, size, biome=None):
             group.add(GameGrid.GCell((0, i * 40), True, biome))
             group.add(GameGrid.GCell((size * 40, i * 40), True, biome))
     if biome is None:
-        wizard_NPC = NPC(['Здравствуй, странник', 'Тебе помочь?', 'Зелье здоровья', '20 монет'], (400, 300),
+        wizard_NPC = NPC(['Здравствуй, странник', 'Тебе помочь?', 'Зелье здоровья', '20 монет'],
+                         (400, 300),
                          None, screen, 0,
-                         pygame.transform.flip(pygame.image.load('data/images/wizard.png'), True, False))
+                         pygame.transform.flip(pygame.image.load('data/images/wizard.png'), True,
+                                               False))
         group.add(wizard_NPC)
     elif biome == 'hell':
         for i in range(10):
-            group.add(Enemy((random.randrange(50, size * 40, 50), random.randrange(50, size * 40, 50)), 1))
+            enemies.add(
+                Enemy((random.randrange(50, size * 40, 50), random.randrange(50, size * 40, 50)),
+                      Weapon((300, 400), None, 'Обычный лук', screen, 20,
+                             25, pygame.image.load('data/images/average_bow.png'))))
     return group

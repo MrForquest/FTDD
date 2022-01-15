@@ -38,7 +38,7 @@ class LayerGroup(pygame.sprite.Group):
     """
 
     def get_layer(self, spr):
-        return getattr(spr, 'layer', 100)
+        return getattr(spr, 'layer_', 100)
 
     def draw(self, surface):
         sprites = self.sprites()

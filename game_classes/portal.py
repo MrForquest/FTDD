@@ -1,5 +1,6 @@
 import pygame
 from game_functions.Generating_level import generate_level
+from data_file import enemies
 
 
 class Portal(pygame.sprite.Sprite):
@@ -13,7 +14,7 @@ class Portal(pygame.sprite.Sprite):
         self.sc = scr
         self.x, self.y = self.rect.x, self.rect.y
         self.al = alll
-        self.layer = 4
+        self.layer_ = 4
         self.count = 20
 
     def update(self):

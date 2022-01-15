@@ -1,7 +1,7 @@
 import pygame as pp
 import math
 from game_classes.utilities import Line
-from data_file import all_sprites
+from data_file import all_sprites, enemies
 from game_classes.Projectile import Projectile
 
 
@@ -9,7 +9,7 @@ class Enemy(pp.sprite.Sprite):
     size = 40
 
     def __init__(self, coord, weapon):
-        pp.sprite.Sprite.__init__(self)
+        pp.sprite.Sprite.__init__(self, enemies, all_sprites)
         self.image1 = pp.image.load('data/images/player.png')
         self.image2 = pp.image.load('data/images/player_left.png')
         self.image = self.image1
@@ -21,7 +21,7 @@ class Enemy(pp.sprite.Sprite):
         self.hand = weapon
         self.hand.player = self
         self.hand.belong = True
-        self.layer = 23
+        self.layer_ = 23
         self.effect_dist = self.size * 5
         self.count_shooting = 0
 
@@ -69,7 +69,7 @@ class Enemy(pp.sprite.Sprite):
                         dx = math.cos(angle) * velocity
                         dy = math.sin(angle) * velocity
                     else:
-                        self.count_shooting+=1
+                        self.count_shooting += 1
                         if self.count_shooting >= 20:
                             self.hand.shoot(sprite.rect.center, all_sprites)
                             self.count_shooting = 0
@@ -97,12 +97,14 @@ class Enemy(pp.sprite.Sprite):
                             dx = math.copysign(ddx + 1, (x1 - x2))
                         else:
                             dy = math.copysign(ddy + 1, (y1 - y2))
-                if sprite.__class__.__name__ == 'Projectile' and \
-                        self.cooldown_flag and \
-                        self.cooldown_count == 60:
-                    self.cooldown_count = 0
-                    self.cooldown_flag = False
-                    self.hp -= sprite.damage
+
+                if issubclass(sprite.__class__, Projectile) and self.cooldown_flag and \
+                    self.cooldown_count == 60:
+                    if sprite.player.__class__.__name__ == "Player":
+                        self.cooldown_count = 0
+                        self.cooldown_flag = False
+                        self.hp -= sprite.damage
+                        sprite.kill()
                 if self.cooldown_flag is False:
                     self.cooldown_count += 1
                 if self.cooldown_count == 60:

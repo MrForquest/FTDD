@@ -1,12 +1,13 @@
 import pygame
 import random
+from data_file import all_sprites
 
 
 class GCell(pygame.sprite.Sprite):
     size = 40
 
     def __init__(self, coord, concerning, biome, type_id=None):
-        super().__init__()
+        super().__init__(all_sprites)
         self.type_id = type_id
         self.concerning = concerning
         # self.rect.size = self.size
@@ -26,7 +27,7 @@ class GCell(pygame.sprite.Sprite):
         self.rect.y = coord[1]
         self.x = coord[0]
         self.y = coord[1]
-        self.layer = 3
+        self.layer_ = 3
 
     def draw(self, sc):
         sc.blit(self.image, self.rect)

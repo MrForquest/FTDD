@@ -20,7 +20,7 @@ class Player(pp.sprite.Sprite):
         self.inventory = {'weapons': [],
                           'magicshit': []
                           }
-        self.layer = 23
+        self.layer_ = 23
         self.hand = None
 
     def update(self):

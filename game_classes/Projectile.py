@@ -1,10 +1,11 @@
 import pygame as pp
 import math
+from data_file import all_sprites
 
 
 class Projectile(pp.sprite.Sprite):
     def __init__(self, coord, course, velocity, size, player, group_collide, damage):
-        pp.sprite.Sprite.__init__(self)
+        pp.sprite.Sprite.__init__(self, all_sprites)
         self.size = size
         self.image = pp.Surface((self.size, self.size),
                                 pp.SRCALPHA, 32)
@@ -21,7 +22,7 @@ class Projectile(pp.sprite.Sprite):
         self.group_collide = group_collide
         self.live = True
         self.count = 0
-        self.layer = 13
+        self.layer_ = 13
         self.damage = damage
 
     def update(self):
@@ -45,8 +46,8 @@ class Projectile(pp.sprite.Sprite):
 
 class EmperorProjectile(Projectile):
     def __init__(self, *args):
-        super(EmperorProjectile, self).__init__(*args[:len(args) - 1])
-        self.enemies = args[-1]
+        super(EmperorProjectile, self).__init__(*args[:len(args) - 2], args[-1])
+        self.enemies = args[-2]
 
     def update(self):
         dx = 0
@@ -55,14 +56,13 @@ class EmperorProjectile(Projectile):
         if len(self.enemies):
             nearest_enemy = min(self.enemies, key=lambda enemy: ((enemy.x - self.x) ** 2 + (
                 enemy.y - self.y) ** 2) ** 0.5)
-            katx = (nearest_enemy.x - self.x)
-            katy = (nearest_enemy.y - self.y)
+            katx = (nearest_enemy.x - self.x) + nearest_enemy.rect.width // 2
+            katy = (nearest_enemy.y - self.y) + nearest_enemy.rect.height // 2
             angle = math.atan2(katy, katx)
 
             dx = math.cos(angle) * self.velocity
             dy = math.sin(angle) * self.velocity
-            if abs(katx) < 5 and abs(katy) < 5:
-                self.live = False
+
         else:
             self.live = False
         self.x += dx

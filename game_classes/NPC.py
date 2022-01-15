@@ -16,7 +16,7 @@ class NPC(pygame.sprite.Sprite):
         self.screen = screen
         self.x, self.y = self.rect.x, self.rect.y
         self.inventory = []
-        self.layer = 23
+        self.layer_ = 23
         self.cooldown = 60
         self.cooldown_flag = False
 
