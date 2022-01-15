@@ -3,7 +3,7 @@ import math
 
 
 class Projectile(pp.sprite.Sprite):
-    def __init__(self, coord, course, velocity, size, player, group_collide):
+    def __init__(self, coord, course, velocity, size, player, group_collide, damage):
         pp.sprite.Sprite.__init__(self)
         self.size = size
         self.image = pp.Surface((self.size, self.size),
@@ -22,6 +22,7 @@ class Projectile(pp.sprite.Sprite):
         self.live = True
         self.count = 0
         self.layer = 13
+        self.damage = damage
 
     def update(self):
         self.x += self.vx

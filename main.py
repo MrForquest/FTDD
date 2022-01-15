@@ -25,8 +25,8 @@ if __name__ == '__main__':
                     25, pygame.image.load('data/images/average_bow.png'))
     weapon2 = Weapon((350, 400), player, 'Обычный лук', screen, 20,
                      25, pygame.image.load('data/images/average_magic_stick.png'))
-    group.add(
-        Portal(pygame.image.load('data/images/portal1.png'), (0, 8 * 40), player, group, screen,
+    all_sprites.add(
+        Portal(pygame.image.load('data/images/portal1.png'), (-80, 8 * 40), player, group, screen,
                all_sprites))
     all_sprites.add(*group.sprites())
 
@@ -34,8 +34,6 @@ if __name__ == '__main__':
 
     all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20, 25,
                             pygame.image.load('data/images/average_bow.png')))
-    all_sprites.add(weapon)
-    group.add(weapon)
 
     inventory = Inventory(player)
     all_sprites.add(player)
@@ -62,7 +60,7 @@ if __name__ == '__main__':
                 elif event.button == 4:
                     inventory.slot_use = (inventory.slot_use - 1) % 4
                     inventory.update(screen)
-        screen.fill((0, 0, 0))
+        screen.fill((33, 33, 33))
 
         player_coord = player.get_cords()
         camera.draw(screen, player_coord, all_sprites)

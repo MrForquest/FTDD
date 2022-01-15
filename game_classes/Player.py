@@ -70,6 +70,15 @@ class Player(pp.sprite.Sprite):
     def get_cords(self):
         return [self.x, self.y]
 
+    def throw(self, thing):
+        try:
+            self.inventory[thing[0]][thing[1]].throwed = True
+            self.inventory[thing[0]][thing[1]].kill()
+            del self.inventory[thing[0]][thing[1]]
+        except IndexError:
+            pass
+        print(self.inventory[thing[0]])
+
 
 class Camera:
     def __init__(self):

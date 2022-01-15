@@ -36,8 +36,8 @@ class Thing(pygame.sprite.Sprite):
             self.x = self.player.x + 10
             self.y = self.player.y + 10
         if pygame.sprite.collide_rect(self, self.player) and \
-            self not in self.player.inventory and \
-            self.belong is False:
+                self not in self.player.inventory and \
+                self.belong is False:
             if key[pygame.K_x]:
                 self.player.inventory['just things'].append(self)
                 self.belong = True
@@ -58,12 +58,15 @@ class Weapon(Thing):
             self.image1 = image
             self.image2 = pygame.transform.flip(self.image1, True, False)
             self.image = self.image1
+            self.throwed = False
 
     def update(self):
+        if self.throwed:
+            self.image = pygame.Surface((1, 1))
         key = pygame.key.get_pressed()
         if pygame.sprite.collide_rect(self, self.player) and self not in self.player.inventory and \
-            self.belong is False:
-            if key[pygame.K_x]:
+                self.belong is False:
+            if key[pygame.K_x] and len(self.player.inventory['weapons']) < 2:
                 self.player.inventory['weapons'].append(self)
                 self.belong = True
             font = pygame.font.Font(None, 22)
@@ -90,7 +93,7 @@ class Weapon(Thing):
         katx = (pos[0] - self.rect.center[0])
         katy = -(pos[1] - self.rect.center[1])
         co = math.atan2(katy, katx)
-        group.add(Projectile(self.get_cords(), co, 10, 20, True, group))
+        group.add(Projectile(self.get_cords(), co, 10, 20, True, group, self.damage))
 
 
 class Emperor(Weapon):
@@ -99,3 +102,27 @@ class Emperor(Weapon):
         katy = -(pos[1] - self.rect.center[1])
         co = math.atan2(katy, katx)
         group.add(EmperorProjectile(self.get_cords(), co, 10, 20, True, group, enemies))
+
+
+class Potion():
+    def __init__(self, player, effect, image, sc):
+        super().__init__()
+        self.pl = player
+        self.effect = effect
+        self.image = image
+
+    def draw(self):
+        if self.player.image is self.player.image1:
+            if self.image is self.image2:
+                self.image = self.image1
+            self.rect.x = self.player.rect.x + 25
+            self.rect.y = self.player.rect.y + 10
+            self.x = self.player.x + 25
+            self.y = self.player.y + 10
+        if self.player.image is self.player.image2:
+            if self.image is self.image1:
+                self.image = self.image2
+            self.rect.x = self.player.rect.x - 25
+            self.rect.y = self.player.rect.y + 10
+            self.x = self.player.x - 25
+            self.y = self.player.y + 10
