@@ -4,7 +4,7 @@ pygame.init()
 
 
 class NPC(pygame.sprite.Sprite):
-    def __init__(self, diolog, coords, player, screen, thing, image):
+    def __init__(self, diolog, coords, player, screen, things, image):
         super().__init__()
         self.image = image
         self.diolog = diolog
@@ -15,7 +15,7 @@ class NPC(pygame.sprite.Sprite):
         self.word = self.diolog[self.count]
         self.screen = screen
         self.x, self.y = self.rect.x, self.rect.y
-        self.inventory = []
+        self.inventory = things
         self.layer_ = 23
         self.cooldown = 60
         self.cooldown_flag = False

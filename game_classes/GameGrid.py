@@ -16,7 +16,6 @@ class GCell(pygame.sprite.Sprite):
                 self.image = pygame.image.load('data/images/grass1.png')
                 self.image = pygame.transform.rotate(self.image, random.randrange(0, 360, 90))
             elif biome == 'hell':
-                print('o')
                 self.image = pygame.image.load('data/images/hell_tile.png')
                 self.image = pygame.transform.rotate(self.image, random.randrange(0, 360, 90))
         else:

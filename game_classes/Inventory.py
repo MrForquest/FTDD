@@ -1,4 +1,5 @@
 import pygame
+from game_classes.Game_things import Thing
 
 
 class Inventory(pygame.sprite.Sprite):
@@ -23,15 +24,19 @@ class Inventory(pygame.sprite.Sprite):
         sc.blit(self.image, self.rect)
         self.player.hand = self.slot[self.slot_use]
         key = pygame.key.get_pressed()
-        if key[pygame.K_e]:
-            if self.slot_use >= 0:
+        if key[pygame.K_e] and isinstance(self.player.hand, Thing):
+            if 2 > self.slot_use >= 0:
                 self.player.throw(('weapons', self.slot_use))
-            elif self.slot_use >= 3:
-                self.player.throw(('magicshit', self.slot_use))
+            elif self.slot_use >= 2:
+                self.slot[self.slot_use].use()
+                self.player.throw(('magicshit', self.slot_use - 2))
             self.slot[self.slot_use] = None
         try:
             self.slot[0] = self.player.inventory['weapons'][0]
             self.slot[1] = self.player.inventory['weapons'][1]
+        except IndexError:
+            pass
+        try:
             self.slot[2] = self.player.inventory['magicshit'][0]
             self.slot[3] = self.player.inventory['magicshit'][1]
         except IndexError:

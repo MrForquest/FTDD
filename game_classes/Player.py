@@ -1,6 +1,11 @@
+import site
+
 import pygame as pp
 import math
-from game_classes.Game_things import Weapon
+from game_classes.Game_things import Weapon, Potion, Thing
+from data_file import screen
+from game_classes.Projectile import Projectile
+from game_classes.Enemy import Enemy
 
 
 class Player(pp.sprite.Sprite):
@@ -22,14 +27,24 @@ class Player(pp.sprite.Sprite):
                           }
         self.layer_ = 23
         self.hand = None
+        self.mana = 100
 
     def update(self):
         dx = 0
         dy = 0
         vel = 2
+        if self.hp <= 0:
+            self.kill()
+        h = 60 * self.mana / 100
+        pp.draw.rect(screen, (0, 63, 209), pp.Rect(180, 620, 15, h))
+        h = 60 * self.hp / 100
+        pp.draw.rect(screen, (240, 5, 5), pp.Rect(608, 620, 15, h))
         key = pp.key.get_pressed()
-        if isinstance(self.hand, Weapon):
-            self.hand.draw()
+        try:
+            if isinstance(self.hand, Thing) and self.hand.throwed is False:
+                self.hand.draw()
+        except Exception:
+            pass
         if key[pp.K_a] and self.rect.x > 0:
             dx = -vel
             self.image = self.image2
@@ -63,6 +78,10 @@ class Player(pp.sprite.Sprite):
                             dx = math.copysign(ddx + 1, (x1 - x2))
                         else:
                             dy = math.copysign(ddy + 1, (y1 - y2))
+                if isinstance(sprite, Projectile):
+                    if isinstance(sprite.player, Enemy):
+                        sprite.kill()
+                        self.hp -= sprite.damage
 
         self.x += dx
         self.y += dy
@@ -72,13 +91,12 @@ class Player(pp.sprite.Sprite):
 
     def throw(self, thing):
         try:
+            print(self.inventory)
             self.inventory[thing[0]][thing[1]].throwed = True
             self.inventory[thing[0]][thing[1]].kill()
             del self.inventory[thing[0]][thing[1]]
         except IndexError:
             pass
-        print(self.inventory[thing[0]])
-
 
 class Camera:
     def __init__(self):
