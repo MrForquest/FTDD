@@ -57,7 +57,7 @@ class Projectile(pp.sprite.Sprite):
         self.count += 1
         if not self.live:
             self.kill()
-        if self.count > self.velocity * 50:
+        if self.count > self.velocity * 5:
             self.kill()
 
 

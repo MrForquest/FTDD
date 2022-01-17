@@ -1,19 +1,17 @@
 import pygame
 from game_classes.GameGrid import Grid, GCell
 from game_classes.Player import Player, Camera
-from game_classes.Game_things import Thing, Weapon, Emperor, WhiteNova
+from game_classes.Game_things import Thing, Weapon, Emperor, WhiteNova, Potion
 from game_functions.Generating_level import generate_level
 from game_classes.Inventory import Inventory
 from game_classes.NPC import NPC
 from game_classes.Enemy import Enemy
 from game_classes.portal import Portal
-from data_file import enemies, group, things, all_sprites
+from data_file import enemies, group, things, all_sprites, screen
 
 if __name__ == '__main__':
     pygame.init()
     pygame.display.set_caption('Движущийся квадрат')
-    size = width, height = 800, 700
-    screen = pygame.display.set_mode(size)
 
     generate_level(group, screen, 15)
     grid = Grid(20, 20, (0, 0), grid=group)
@@ -34,6 +32,10 @@ if __name__ == '__main__':
     all_sprites.add(
         Portal(pygame.image.load('data/images/portal1.png'), (-80, 8 * 40), player, group, screen,
                all_sprites))
+    all_sprites.add(Potion((460, 400), screen, ('hp', 25), 'Зелье здоровья',
+                           20, player, pygame.image.load('data/images/heal_potion.png')))
+    all_sprites.add(Potion((440, 400), screen, ('mn', 25), 'Зелье маны',
+                           20, player, pygame.image.load('data/images/mana_potion.png')))
     all_sprites.add(*group.sprites())
 
     all_sprites.add(weapon, weapon2, weapon3, weapon_enemy)
@@ -48,6 +50,7 @@ if __name__ == '__main__':
     inventory = Inventory(player)
     all_sprites.add(player)
     camera = Camera()
+    hp_im = pygame.image.load('data/images/health_frame.png')
 
     running = True
     x_pos = 0
@@ -59,8 +62,9 @@ if __name__ == '__main__':
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and player.inventory['weapons'] != []:
-                    if isinstance(player.hand, Weapon):
-                        player.hand.shoot(event.pos, all_sprites)
+                    if isinstance(player.hand, Weapon) and player.mana >= player.hand.mana:
+                        player.hand.shoot(event.pos, all_sprites, player)
+                        player.mana -= player.hand.mana
 
             if event.type == pygame.MOUSEBUTTONDOWN and (event.button == 5 or event.button == 4):
                 if event.button == 5:
@@ -85,6 +89,8 @@ if __name__ == '__main__':
         group.update()
         all_sprites.update()
         inventory.update(screen)
+        screen.blit(hp_im, pygame.Rect(180, 620, 20, 20))
+        screen.blit(hp_im, pygame.Rect(608, 620, 20, 20))
 
         clock.tick(fps)
         pygame.display.update()
