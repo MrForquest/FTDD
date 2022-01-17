@@ -1,6 +1,6 @@
 import pygame
 import math
-from game_classes.Projectile import Projectile, EmperorProjectile
+from game_classes.Projectile import Projectile, EmperorProjectile, WNProjectile
 from data_file import enemies, group, things, all_sprites
 
 pygame.init()
@@ -111,3 +111,13 @@ class Emperor(Weapon):
         group_.add(
             EmperorProjectile(self.get_cords(), co, 10, 15, self.player, group_, self.damage,
                               self.image_projectile))
+
+
+class WhiteNova(Weapon):
+    def shoot(self, pos, group_):
+        katx = (pos[0] - self.rect.center[0])
+        katy = (pos[1] - self.rect.center[1])
+        co = math.atan2(katy, katx)
+        group_.add(
+            WNProjectile(self.get_cords(), co, 2, 15, self.player, group_, self.damage,
+                         self.image_projectile))

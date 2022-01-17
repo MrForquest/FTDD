@@ -98,18 +98,6 @@ class Enemy(pp.sprite.Sprite):
                         else:
                             dy = math.copysign(ddy + 1, (y1 - y2))
 
-                if issubclass(sprite.__class__, Projectile) and self.cooldown_flag and \
-                    self.cooldown_count == 60:
-                    if sprite.player.__class__.__name__ == "Player":
-                        self.cooldown_count = 0
-                        self.cooldown_flag = False
-                        self.hp -= sprite.damage
-                        sprite.kill()
-                if self.cooldown_flag is False:
-                    self.cooldown_count += 1
-                if self.cooldown_count == 60:
-                    self.cooldown_flag = True
-
         self.x += dx
         self.y += dy
         self.radar.x = self.x - (self.radar.rect.width - self.rect.width) // 2

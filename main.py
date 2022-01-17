@@ -1,7 +1,7 @@
 import pygame
 from game_classes.GameGrid import Grid, GCell
 from game_classes.Player import Player, Camera
-from game_classes.Game_things import Thing, Weapon, Emperor
+from game_classes.Game_things import Thing, Weapon, Emperor, WhiteNova
 from game_functions.Generating_level import generate_level
 from game_classes.Inventory import Inventory
 from game_classes.NPC import NPC
@@ -27,6 +27,8 @@ if __name__ == '__main__':
     weapon2 = Weapon((350, 400), player, 'Посох Эндера', screen, 20,
                      25, pygame.image.load('data/images/average_magic_stick.png'),
                      pygame.image.load('data/images/enderperl.png'), 30, 10)
+    weapon3 = WhiteNova((700, 400), player, 'White Nova', screen, 20,
+                        25, pygame.image.load('data/images/white_nova.png'))
     weapon_enemy = Weapon((350, 400), player, 'Вражеский лук', screen, 25,
                           25, pygame.image.load('data/images/average_magic_stick.png'))
     all_sprites.add(
@@ -34,7 +36,7 @@ if __name__ == '__main__':
                all_sprites))
     all_sprites.add(*group.sprites())
 
-    all_sprites.add(weapon, weapon2, weapon_enemy)
+    all_sprites.add(weapon, weapon2, weapon3, weapon_enemy)
 
     all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20, 25,
                             pygame.image.load('data/images/emperor.png'),
