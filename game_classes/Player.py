@@ -98,6 +98,7 @@ class Player(pp.sprite.Sprite):
         except IndexError:
             pass
 
+
 class Camera:
     def __init__(self):
         self.x = 0

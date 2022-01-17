@@ -20,15 +20,15 @@ if __name__ == '__main__':
         if isinstance(i, NPC):
             i.player = player
     weapon = Weapon((300, 400), player, 'Лук тёмного пламени', screen, 40,
-                    25, pygame.image.load('data/images/average_bow.png'),
+                    25, 0, pygame.image.load('data/images/average_bow.png'),
                     pygame.image.load('data/images/dark_flame.png'), 40, 7)
     weapon2 = Weapon((350, 400), player, 'Посох Эндера', screen, 20,
-                     25, pygame.image.load('data/images/average_magic_stick.png'),
+                     25, 0, pygame.image.load('data/images/average_magic_stick.png'),
                      pygame.image.load('data/images/enderperl.png'), 30, 10)
     weapon3 = WhiteNova((700, 400), player, 'White Nova', screen, 20,
-                        25, pygame.image.load('data/images/white_nova.png'))
+                        25, 15, pygame.image.load('data/images/white_nova.png'))
     weapon_enemy = Weapon((350, 400), player, 'Вражеский лук', screen, 25,
-                          25, pygame.image.load('data/images/average_magic_stick.png'))
+                          25, 0, pygame.image.load('data/images/average_magic_stick.png'))
     all_sprites.add(
         Portal(pygame.image.load('data/images/portal1.png'), (-80, 8 * 40), player, group, screen,
                all_sprites))
@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     all_sprites.add(weapon, weapon2, weapon3, weapon_enemy)
 
-    all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20, 25,
+    all_sprites.add(Emperor((500, 400), player, 'Emperor', screen, 20, 25, 2,
                             pygame.image.load('data/images/emperor.png'),
                             pygame.image.load('data/images/emperor_projectile.png')))
     all_sprites.add(weapon)
@@ -63,7 +63,7 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and player.inventory['weapons'] != []:
                     if isinstance(player.hand, Weapon) and player.mana >= player.hand.mana:
-                        player.hand.shoot(event.pos, all_sprites, player)
+                        player.hand.shoot(event.pos, all_sprites)
                         player.mana -= player.hand.mana
 
             if event.type == pygame.MOUSEBUTTONDOWN and (event.button == 5 or event.button == 4):

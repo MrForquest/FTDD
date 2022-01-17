@@ -71,7 +71,7 @@ class Enemy(pp.sprite.Sprite):
                     else:
                         self.count_shooting += 1
                         if self.count_shooting >= 20:
-                            self.hand.shoot(sprite.rect.center, all_sprites, self)
+                            self.hand.shoot(sprite.rect.center, all_sprites)
                             self.count_shooting = 0
         if dx > 0:
             self.image = self.image1
