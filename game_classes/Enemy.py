@@ -54,10 +54,7 @@ class Enemy(pp.sprite.Sprite):
 
                     boxes = filter(lambda b: getattr(b, "concerning", False), sprites_collides)
                     lines = list()
-                    [lines.extend(
-                        [Line((b.x, b.y), (b.x + b.rect.width, b.y + b.rect.height)),
-                         Line((b.x, b.y + b.rect.height), (b.x + b.rect.width, b.y))])
-                        for b in boxes]
+                    [lines.extend([b.line1, b.line2]) for b in boxes]
                     visual_line = Line((self.x, self.y), (sprite.x, sprite.y))
                     inters = set(map(lambda li: visual_line.intersection(li), lines))
                     if inters:

@@ -32,6 +32,7 @@ def generate_level(group, screen, size, biome=None):
         for i in range(10):
             enemies.add(
                 Enemy((random.randrange(50, size * 40, 50), random.randrange(50, size * 40, 50)),
-                      Weapon((350, 400), None, 'Вражеский лук', screen, 25,
-                             25, 1, pygame.image.load('data/images/average_magic_stick.png'))))
-    return group
+                      Weapon((350, 400), None, 'Вражеский лук', screen, 0,
+                             25, 1,
+                             image=pygame.image.load('data/images/average_magic_stick.png'))))
+        return group

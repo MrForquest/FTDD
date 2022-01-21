@@ -1,6 +1,7 @@
 import pygame
 import random
 from data_file import all_sprites
+from game_classes.utilities import Line
 
 
 class GCell(pygame.sprite.Sprite):
@@ -27,6 +28,8 @@ class GCell(pygame.sprite.Sprite):
         self.x = coord[0]
         self.y = coord[1]
         self.layer_ = 3
+        self.line1 = Line((self.x, self.y), (self.x + self.rect.width, self.y + self.rect.height))
+        self.line2 = Line((self.x, self.y + self.rect.height), (self.x + self.rect.width, self.y))
 
     def draw(self, sc):
         sc.blit(self.image, self.rect)

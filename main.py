@@ -94,4 +94,5 @@ if __name__ == '__main__':
 
         clock.tick(fps)
         pygame.display.update()
+        print(clock.get_fps())
     pygame.quit()
