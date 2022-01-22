@@ -9,7 +9,7 @@ from game_classes.Enemy import Enemy
 
 
 class Player(pp.sprite.Sprite):
-    size = 40
+    size = 30
 
     def __init__(self, coord, group_collide):
         pp.sprite.Sprite.__init__(self)
@@ -17,7 +17,7 @@ class Player(pp.sprite.Sprite):
         self.image2 = pp.image.load('data/images/player_left.png')
 
         self.image = self.image1
-        self.rect = pp.Rect(*coord, self.size, self.size)
+        self.rect = pp.Rect(*coord, self.size, self.size*1.27)
         self.x = coord[0]
         self.y = coord[1]
         self.hp = 100

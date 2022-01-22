@@ -9,7 +9,7 @@ pygame.init()
 
 class Thing(pygame.sprite.Sprite):
     def __init__(self, cords, pl, name, screen, image=None):
-        pygame.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite.__init__(self, all_sprites)
         if image is None:
             self.image = pygame.surface.Surface((20, 20))
             self.image.fill((255, 255, 255))

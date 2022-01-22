@@ -1,6 +1,6 @@
 import pygame
 import random
-from data_file import all_sprites
+from data_file import all_sprites, textures
 from game_classes.utilities import Line
 
 
@@ -14,20 +14,24 @@ class GCell(pygame.sprite.Sprite):
         # self.rect.size = self.size
         if self.concerning is False:
             if biome is None:
-                self.image = pygame.image.load('data/images/grass1.png')
+                self.image = textures["grass1"]
                 self.image = pygame.transform.rotate(self.image, random.randrange(0, 360, 90))
+
             elif biome == 'hell':
-                self.image = pygame.image.load('data/images/hell_tile.png')
+                self.image = textures["hell_tile"]
                 self.image = pygame.transform.rotate(self.image, random.randrange(0, 360, 90))
         else:
-            self.image = self.image = pygame.image.load('data/images/wall.png')
+            self.image = self.image = textures["wall"]
 
         self.rect = pygame.Rect(*coord, self.size, self.size)
         self.rect.x = coord[0]
         self.rect.y = coord[1]
         self.x = coord[0]
         self.y = coord[1]
-        self.layer_ = 3
+        if self.concerning:
+            self.layer_ = 4
+        else:
+            self.layer_ = 3
         self.line1 = Line((self.x, self.y), (self.x + self.rect.width, self.y + self.rect.height))
         self.line2 = Line((self.x, self.y + self.rect.height), (self.x + self.rect.width, self.y))
 
