@@ -8,7 +8,7 @@ from game_functions.sql_save import save
 
 def pr():
     global pause
-    pause = False
+    pause[0] = False
 
 
 def sv():
@@ -80,4 +80,5 @@ class MainMenu:
 
 
 menu = MainMenu(screen.get_size(), None)
-pause = True
+pause = list()
+pause.append(True)
