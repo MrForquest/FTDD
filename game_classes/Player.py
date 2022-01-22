@@ -20,24 +20,28 @@ class Player(pp.sprite.Sprite):
         self.rect = pp.Rect(*coord, self.size, self.size*1.27)
         self.x = coord[0]
         self.y = coord[1]
-        self.hp = 100
+        self.hp = 300
         self.group_collide = group_collide
         self.inventory = {'weapons': [],
                           'magicshit': []
                           }
         self.layer_ = 23
         self.hand = None
-        self.mana = 100
+        self.mana = 500
+        self.money = 50
 
     def update(self):
+        for i in self.inventory:
+            for j in self.inventory[i]:
+                j.belong = True
         dx = 0
         dy = 0
         vel = 2
         if self.hp <= 0:
             self.kill()
-        h = 60 * self.mana / 100
+        h = 60 * self.mana / 500
         pp.draw.rect(screen, (0, 63, 209), pp.Rect(180, 620, 15, h))
-        h = 60 * self.hp / 100
+        h = 60 * self.hp / 300
         pp.draw.rect(screen, (240, 5, 5), pp.Rect(608, 620, 15, h))
         key = pp.key.get_pressed()
         try:
@@ -91,7 +95,6 @@ class Player(pp.sprite.Sprite):
 
     def throw(self, thing):
         try:
-            print(self.inventory)
             self.inventory[thing[0]][thing[1]].throwed = True
             self.inventory[thing[0]][thing[1]].kill()
             del self.inventory[thing[0]][thing[1]]

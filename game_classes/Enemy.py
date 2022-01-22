@@ -19,8 +19,9 @@ class Enemy(pp.sprite.Sprite):
         self.hp = 100
         self.inventory = dict()
         self.hand = weapon
-        self.hand.player = self
-        self.hand.belong = True
+        if self.hand is not None:
+            self.hand.player = self
+            self.hand.belong = True
         self.layer_ = 23
         self.effect_dist = self.size * 5
         self.count_shooting = 0
@@ -38,6 +39,8 @@ class Enemy(pp.sprite.Sprite):
         self.cooldown_flag = True
 
     def update(self):
+        self.hand.player = self
+        self.hand.belong = True
         if self.hp <= 0:
             self.radar.kill()
             self.kill()

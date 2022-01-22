@@ -37,8 +37,8 @@ class Thing(pygame.sprite.Sprite):
             self.x = self.player.x + 10
             self.y = self.player.y + 10
         if pygame.sprite.collide_rect(self, self.player) and \
-            self not in self.player.inventory and \
-            self.belong is False:
+                self not in self.player.inventory and \
+                self.belong is False:
             if key[pygame.K_x]:
                 self.player.inventory['just things'].append(self)
                 self.belong = True
@@ -90,7 +90,7 @@ class Weapon(Thing):
             self.image = pygame.Surface((1, 1))
         key = pygame.key.get_pressed()
         if pygame.sprite.collide_rect(self, self.player) and self not in self.player.inventory and \
-            self.belong is False:
+                self.belong is False:
             if key[pygame.K_x] and len(self.player.inventory['weapons']) < 2:
                 self.player.inventory['weapons'].append(self)
                 self.belong = True
@@ -123,8 +123,8 @@ class Potion(Thing):
             self.image = pygame.Surface((1, 1))
         key = pygame.key.get_pressed()
         if pygame.sprite.collide_rect(self, self.player) and \
-            self not in self.player.inventory and \
-            self.belong is False:
+                self not in self.player.inventory and \
+                self.belong is False:
             if key[pygame.K_x]:
                 self.player.inventory['magicshit'].append(self)
                 self.belong = True
@@ -134,11 +134,13 @@ class Potion(Thing):
 
     def use(self):
         if self.effect[0] == 'hp':
-            if self.player.hp + self.effect[1] <= 100:
+            if self.player.hp + self.effect[1] <= 300:
                 self.player.hp += self.effect[1]
+                print('healed')
         elif self.effect[0] == 'mn':
-            if self.player.mana + self.effect[1] <= 100:
+            if self.player.mana + self.effect[1] <= 500:
                 self.player.mana += self.effect[1]
+                print('mana')
 
 
 class Emperor(Weapon):
