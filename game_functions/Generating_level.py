@@ -30,9 +30,11 @@ def generate_level(group, screen, size, biome=None):
         group.add(wizard_NPC)
     elif biome == 'hell':
         for i in range(10):
-            enemies.add(
-                Enemy((random.randrange(50, size * 40, 50), random.randrange(50, size * 40, 50)),
-                      Weapon((350, 400), None, 'Вражеский лук', screen, 0,
-                             25, 1,
-                             image=pygame.image.load('data/images/average_magic_stick.png'))))
+            en = Enemy((random.randrange(50, size * 40, 50), random.randrange(50, size * 40, 50)), None)
+            wp = Weapon((350, 400), en, 'Вражеский посох', screen, 25,
+                        25, 0, pygame.image.load('data/images/average_magic_stick.png'),
+                        image_projectile=pygame.image.load('data/images/flame.png'))
+            en.hand = wp
+            print(en.hand)
+            enemies.add(en)
         return group

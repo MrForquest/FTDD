@@ -1,11 +1,18 @@
 import pygame
-from data_file import enemies, group, things, all_sprites, screen
-from button import Button
-import os, sys
+from data_file import screen
+from interface.button import Button
+import os
+import sys
+from game_functions.sql_save import save
 
 
 def pr():
-    print(12)
+    global pause
+    pause = False
+
+
+def sv():
+    save(menu.pl)
 
 
 def load_image(name, colorkey=None):
@@ -25,21 +32,22 @@ def load_image(name, colorkey=None):
 
 
 class MainMenu:
-    def __init__(self, size_m):
+    def __init__(self, size_m, player):
         self.make_menu(size_m)
+        self.pl = player
 
     def make_menu(self, size_m):
         width_, height_ = size_m
-        wall = load_image('../data/images/main_wall.png')
-        wall = pygame.transform.scale(wall, (0.5 * width_, 0.57 * width))
-        background = pygame.surface.Surface(size)
+        wall = load_image('data/images/main_wall.png')
+        wall = pygame.transform.scale(wall, (int(0.5 * width_), int(0.57 * height_)))
+        background = pygame.surface.Surface(size_m)
         background.blit(wall, (0, 0))
         background.blit(wall, (0.5 * width_, 0))
         wall = pygame.transform.flip(wall, False, True)
         background.blit(wall, (0, 0.565 * height_))
         background.blit(wall, (0.5 * width_, 0.565 * height_))
 
-        magic_circle = load_image('../data/images/magic_circle.png')
+        magic_circle = load_image('data/images/magic_circle.png')
         magic_circle = pygame.transform.scale(magic_circle, (1 * height_, 1 * height_))
         background.blit(magic_circle, (0.53 * (width_ - height_), 0.02 * height_))
         dy = -0.11 * height_
@@ -48,19 +56,21 @@ class MainMenu:
                                      0.17 * height_),
                          border_radius=10)
 
-        f = pygame.font.Font("../data/other/windsor.ttf", round(0.05 * width_))
+        f = pygame.font.Font("data/other/windsor.ttf", round(0.05 * width_))
         text = f.render("Forty-Two", False, "#CC1100")
         background.blit(text, (width_ * 0.43, 0.21 * height_ + dy))
 
         text = f.render("Descents Down", False, "#CC1100")
         background.blit(text, (width_ * 0.4, 0.29 * height_ + dy))
         self.background = background
-        text = f.render("Начать", False, "#CC1100")
+        text = f.render("Играть", False, "#CC1100")
 
         self.btns = list()
         self.btns.append(
             Button(width_ * 0.41, 0.29 * height_, 0.19 * width_, 0.09 * height_, pr, text))
-
+        text = f.render("Сохранить", False, "#CC1100")
+        self.btns.append(
+            Button(width_ * 0.41, 0.39 * height_, 0.19 * width_, 0.09 * height_, sv, text))
         for b in self.btns:
             background.blit(b, b.rect.topleft)
 
@@ -69,26 +79,5 @@ class MainMenu:
             b.check_press(*mouse_pos)
 
 
-if __name__ == '__main__':
-    pygame.init()
-    size = width, height = 900, 900
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    size = width, height = screen.get_size()
-    menu = MainMenu(size)
-    pygame.display.set_caption('Движущийся квадрат')
-
-    running = True
-    x_pos = 0
-    fps = 60
-    clock = pygame.time.Clock()
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if pygame.mouse.get_pressed()[0]:
-                    menu.update_btn(event.pos)
-
-        screen.blit(menu.background, (0, 0))
-        pygame.display.update()
-    pygame.quit()
+menu = MainMenu(screen.get_size(), None)
+pause = True
