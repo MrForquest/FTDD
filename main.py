@@ -34,7 +34,8 @@ if __name__ == '__main__':
     weapon3 = WhiteNova((700, 400), player, 'White Nova', screen, 20,
                         25, 15, textures["white_nova"])
     weapon_enemy = Weapon((350, 400), player, 'Вражеский лук', screen, 25,
-                          25, 0, textures["average_magic_stick"])
+                          25, 0, textures["average_magic_stick"],
+                          image_projectile=textures["dark_flame"])
     weapons.extend([weapon, weapon2, weapon3])
     port2 = Portal(pygame.image.load('data/images/portal1.png'), (-80, 8 * 40), player, group, screen,
                    all_sprites, 0, 1)

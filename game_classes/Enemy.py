@@ -29,7 +29,7 @@ class Enemy(pp.sprite.Sprite):
         self.radar = pp.sprite.Sprite()
         side = self.size * 17
         self.radar.image = pp.Surface((side, side), pp.SRCALPHA, 32)
-        pp.draw.rect(self.radar.image, pp.Color("red"), (0, 0, side, side), 5)
+        #pp.draw.rect(self.radar.image, pp.Color("red"), (0, 0, side, side), 5)
         self.radar.rect = pp.Rect(*self.rect.center, side, side)
         self.radar.rect.center = self.rect.center
         self.radar.x = (self.radar.rect.width - self.rect.width) // 2
