@@ -76,9 +76,12 @@ if __name__ == '__main__':
                 port2 = Portal(pygame.image.load('data/images/portal1.png'), (-80, 8 * 40), player, group, screen,
                                all_sprites, 0, 1)
                 group.add(port2)
-                wizard_NPC = NPC(['Здравствуй, странник', 'Тебе помочь?', 'Зелье здоровья', '20 монет'],
+                wizard_NPC = NPC(['Здравствуй, странник', 'Тебе помочь?'],
                                  (400, 300),
-                                 player, screen, 0,
+                                 player, screen, [Potion((380, 300), screen, ('hp', 120), 'Зелье здоровья',
+                                                         20, player, textures["heal_potion"]),
+                                                  Potion((380, 300), screen, ('mn', 250), 'Зелье маны',
+                                                         20, player, textures["mana_potion"])],
                                  pygame.transform.flip(pygame.image.load('data/images/wizard.png'), True,
                                                        False))
                 group.add(wizard_NPC)
