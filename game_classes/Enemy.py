@@ -44,6 +44,7 @@ class Enemy(pp.sprite.Sprite):
         if self.hp <= 0:
             self.radar.kill()
             self.kill()
+            self.hand.kill()
         velocity = 0.8
         dx = 0
         dy = 0

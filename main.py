@@ -15,7 +15,7 @@ from game_functions.sql_save import sql_load
 
 if __name__ == '__main__':
     pygame.init()
-    pygame.display.set_caption('Движущийся квадрат')
+    pygame.display.set_caption('FTDD')
 
     textures.update(load_texture())
     # generate_level(group, screen, 15)
@@ -37,7 +37,7 @@ if __name__ == '__main__':
                           25, 0, textures["average_magic_stick"])
     weapons.extend([weapon, weapon2, weapon3])
     all_sprites.add(
-        Portal(pygame.image.load('data/images/portal1.png'), (-80, 8 * 40), player, group, screen,
+        Portal(pygame.image.load('data/images/portal1.png'), (-40, 8 * 40), player, group, screen,
                all_sprites))
     hp_pot = Potion((460, 400), screen, ('hp', 25), 'Зелье здоровья',
                     20, player, textures["heal_potion"])
