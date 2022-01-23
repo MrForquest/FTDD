@@ -1,14 +1,26 @@
 import pygame
-from data_file import screen
+from data_file import screen, all_sprites, enemies
 from interface.button import Button
 import os
 import sys
 from game_functions.sql_save import save
+from game_classes.Player import Player
 
 
 def pr():
     global pause
     pause[0] = False
+
+
+def new_game():
+    pause[0] = False
+    for en in enemies.sprites():
+        en.kill()
+        en.hand.kill()
+        en.radar.kill()
+    portal = list(filter(lambda s: s.__class__.__name__ == "Portal", all_sprites.sprites()))
+    if portal:
+        portal[0].flg = 0
 
 
 def sv():
@@ -79,6 +91,29 @@ class MainMenu:
             b.check_press(*mouse_pos)
 
 
+class EndMenu:
+    def __init__(self, size):
+        self.background = pygame.surface.Surface(size)
+        self.background.fill((0, 0, 0))
+        text_img = load_image("data/images/you_died_text.png", -1)
+        self.background.blit(text_img, (
+            (size[0] - text_img.get_width()) // 2, (size[1] - text_img.get_height()) // 2 - 100))
+        width_, height_ = size
+        f = pygame.font.Font("data/other/windsor.ttf", round(0.05 * width_))
+        text = f.render("Возродиться", False, "#CC1100")
+
+        self.btns = list()
+        self.btns.append(
+            Button(width_ * 0.41, 0.5 * height_, 0.19 * width_, 0.09 * height_, new_game, text))
+        for b in self.btns:
+            self.background.blit(b, b.rect.topleft)
+
+    def update_btn(self, mouse_pos):
+        for b in self.btns:
+            b.check_press(*mouse_pos)
+
+
 menu = MainMenu(screen.get_size(), None)
 pause = list()
 pause.append(True)
+final = EndMenu(screen.get_size())

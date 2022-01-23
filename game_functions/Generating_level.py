@@ -67,7 +67,7 @@ class Cell:
 
 
 class Matrix:
-    m = 6
+    m = 7
 
     def __init__(self, x, y, w, h, labyrinth):
         self.x = x
