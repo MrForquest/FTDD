@@ -117,6 +117,7 @@ if __name__ == '__main__':
             all_sprites.update()
             inventory.update(screen)
             fn = pygame.font.Font(None, 30)
+
             mntx = fn.render(str(player.money), True, (255, 255, 255))
             screen.blit(hp_im, pygame.Rect(180, 620, 20, 20))
             screen.blit(hp_im, pygame.Rect(608, 620, 20, 20))
