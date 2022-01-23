@@ -9,3 +9,4 @@ size = width, height = 800, 700
 weapons = []
 screen = pygame.display.set_mode(size)
 textures = dict()
+flag = 1

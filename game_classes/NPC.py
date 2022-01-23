@@ -1,4 +1,7 @@
 import pygame
+from game_classes.Game_things import Thing
+import random
+from data_file import all_sprites
 
 pygame.init()
 
@@ -21,12 +24,17 @@ class NPC(pygame.sprite.Sprite):
         self.cooldown_flag = False
 
     def update(self):
-        self.word = self.diolog[self.count]
         key = pygame.key.get_pressed()
+        a = random.choice(self.inventory)
         if pygame.sprite.collide_rect(self, self.player):
             if key[pygame.K_q] and self.cooldown == 60:
+                if (self.count + 1) == len(self.diolog):
+                    all_sprites.add(a)
                 self.count = (self.count + 1) % len(self.diolog)
-                self.word = self.diolog[self.count]
+                if self.count + 1 == len(self.diolog):
+                    self.word = a.name + ' - ' + str(a.price)
+                else:
+                    self.word = self.diolog[self.count]
                 self.cooldown = 0
                 self.cooldown_flag = True
             font = pygame.font.Font(None, 30)

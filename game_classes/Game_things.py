@@ -116,6 +116,7 @@ class Potion(Thing):
         self.image = image
         self.price = price
         self.effect = effect
+        self.name = name
         self.throwed = False
 
     def update(self):

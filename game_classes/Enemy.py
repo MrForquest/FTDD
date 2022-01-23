@@ -107,3 +107,6 @@ class Enemy(pp.sprite.Sprite):
 
     def get_cords(self):
         return [self.x, self.y]
+
+    def killrad(self):
+        self.radar.kill()

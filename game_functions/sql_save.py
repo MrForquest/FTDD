@@ -15,8 +15,11 @@ def save(pl):
     txt = ''
     for i in pl.inventory:
         for j in pl.inventory[i]:
-            print(j)
-            txt += str(weapons.index(j))
+            try:
+                print(j)
+                txt += str(weapons.index(j))
+            except Exception:
+                pass
     try:
         cursor.execute(f"""UPDATE saves SET inventory = {int(txt)}""")
     except Exception:

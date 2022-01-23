@@ -2,13 +2,22 @@ import random
 from game_classes import GameGrid
 from game_classes.NPC import NPC
 from game_classes.Enemy import Enemy
-from game_classes.Game_things import Weapon
-from data_file import enemies, textures, group
+from game_classes.Game_things import Weapon, Potion
+from data_file import enemies, textures, group, screen, all_sprites
 import pygame
+
+pla = 0
+
+
+def addpl(pl):
+    global pla
+    pla = pl
 
 
 def generate_level(group, screen, size, biome=None):
     for i in group.sprites():
+        if isinstance(i, Enemy):
+            i.killrad()
         i.kill()
     for i in range(size + 1):
         group.add(GameGrid.GCell((i * 40, 0), True, biome))
@@ -22,9 +31,12 @@ def generate_level(group, screen, size, biome=None):
             group.add(GameGrid.GCell((0, i * 40), True, biome))
             group.add(GameGrid.GCell((size * 40, i * 40), True, biome))
     if biome is None:
-        wizard_NPC = NPC(['Здравствуй, странник', 'Тебе помочь?', 'Зелье здоровья', '20 монет'],
+        wizard_NPC = NPC(['Здравствуй, странник', 'Тебе помочь?'],
                          (400, 300),
-                         None, screen, 0,
+                         pla, screen, [Potion((380, 300), screen, ('hp', 120), 'Зелье здоровья',
+                                              20, pla, textures["heal_potion"]),
+                                       Potion((380, 300), screen, ('mn', 250), 'Зелье маны',
+                                              20, pla, textures["mana_potion"])],
                          pygame.transform.flip(pygame.image.load('data/images/wizard.png'), True,
                                                False))
         group.add(wizard_NPC)
@@ -35,6 +47,7 @@ def generate_level(group, screen, size, biome=None):
                         image_projectile=pygame.image.load('data/images/flame.png'))
             en = Enemy((random.randrange(50, size * 40, 50), random.randrange(50, size * 40, 50)),
                        wp)
+            group.add(en)
         return group
 
 
@@ -54,7 +67,7 @@ class Cell:
 
 
 class Matrix:
-    m = 7
+    m = 6
 
     def __init__(self, x, y, w, h, labyrinth):
         self.x = x
@@ -113,8 +126,8 @@ def division_rec(ms_):
         division_rec(m.division_matrix())
 
 
-def generate_labyrinth():
-    a = 21
+def generate_labyrinth(biome):
+    a = 33
     labyrinth = [[Cell(i, j, i * j, 0) for i in range(0, a)] for j in range(0, a)]
     for c in labyrinth[0]:
         c.set_val(1)
@@ -136,6 +149,11 @@ def generate_labyrinth():
             if labyrinth[y][x].val == 1:
                 group.add(GameGrid.GCell((x * size, y * size), True, None))
             else:
-                group.add(GameGrid.GCell((x * size, y * size), False, None))
-
+                if random.randrange(0, 101) == 1:
+                    wp = Weapon((350, 400), None, 'Вражеский посох', screen, 15,
+                                25, 0, pygame.image.load('data/images/average_magic_stick.png'),
+                                image_projectile=pygame.image.load('data/images/flame.png'))
+                    en = Enemy((x * size, y * size), wp)
+                    group.add(en)
+                group.add(GameGrid.GCell((x * size, y * size), False, biome))
     return group
